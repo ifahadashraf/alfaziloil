@@ -1,0 +1,364 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FazilModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Dropoffs">
+          <Key>
+            <PropertyRef Name="DropoffID" />
+          </Key>
+          <Property Name="DropoffID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DropoffName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BrandID" Type="bigint" Nullable="false" />
+          <Property Name="PurchasingPrice" Type="float" Nullable="false" />
+          <Property Name="CanSize" Type="float" />
+          <Property Name="TotalCans" Type="int" />
+          <Property Name="TotalLiters" Type="float" />
+          <Property Name="TotalQuantity" Type="int" />
+          <Property Name="DropoffID" Type="bigint" Nullable="false" />
+          <Property Name="SupplierID" Type="bigint" Nullable="false" />
+          <Property Name="DateOfPurchase" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SaleInvoice">
+          <Key>
+            <PropertyRef Name="SaleID" />
+          </Key>
+          <Property Name="SaleID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SaleDateTime" Type="datetime" Nullable="false" />
+          <Property Name="CustomerID" Type="bigint" />
+          <Property Name="TotalAmount" Type="float" Nullable="false" />
+          <Property Name="SaleTypeID" Type="bigint" Nullable="false" />
+          <Property Name="SaleComments" Type="nvarchar(max)" />
+          <Property Name="Balance" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SaleItems">
+          <Key>
+            <PropertyRef Name="SaleID" />
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="SaleID" Type="bigint" Nullable="false" />
+          <Property Name="ProductID" Type="bigint" Nullable="false" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="SellingPrice" Type="float" Nullable="false" />
+          <Property Name="SellingLiters" Type="float" />
+          <Property Name="CansSold" Type="int" />
+        </EntityType>
+        <EntityType Name="SaleTypes">
+          <Key>
+            <PropertyRef Name="SaleTypeID" />
+          </Key>
+          <Property Name="SaleTypeID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SaleTypeName" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Products_Dropoffs">
+          <End Role="Dropoffs" Type="Self.Dropoffs" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dropoffs">
+              <PropertyRef Name="DropoffID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="DropoffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SaleInvoice_SaleTypes">
+          <End Role="SaleTypes" Type="Self.SaleTypes" Multiplicity="1" />
+          <End Role="SaleInvoice" Type="Self.SaleInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaleTypes">
+              <PropertyRef Name="SaleTypeID" />
+            </Principal>
+            <Dependent Role="SaleInvoice">
+              <PropertyRef Name="SaleTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SaleItems_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="SaleItems" Type="Self.SaleItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="SaleItems">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SaleItems_SaleInvoice">
+          <End Role="SaleInvoice" Type="Self.SaleInvoice" Multiplicity="1" />
+          <End Role="SaleItems" Type="Self.SaleItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaleInvoice">
+              <PropertyRef Name="SaleID" />
+            </Principal>
+            <Dependent Role="SaleItems">
+              <PropertyRef Name="SaleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FazilModelStoreContainer">
+          <EntitySet Name="Dropoffs" EntityType="Self.Dropoffs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SaleInvoice" EntityType="Self.SaleInvoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SaleItems" EntityType="Self.SaleItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SaleTypes" EntityType="Self.SaleTypes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Products_Dropoffs" Association="Self.FK_Products_Dropoffs">
+            <End Role="Dropoffs" EntitySet="Dropoffs" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SaleInvoice_SaleTypes" Association="Self.FK_SaleInvoice_SaleTypes">
+            <End Role="SaleTypes" EntitySet="SaleTypes" />
+            <End Role="SaleInvoice" EntitySet="SaleInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SaleItems_Products" Association="Self.FK_SaleItems_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="SaleItems" EntitySet="SaleItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SaleItems_SaleInvoice" Association="Self.FK_SaleItems_SaleInvoice">
+            <End Role="SaleInvoice" EntitySet="SaleInvoice" />
+            <End Role="SaleItems" EntitySet="SaleItems" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FazilModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Dropoff">
+          <Key>
+            <PropertyRef Name="DropoffID" />
+          </Key>
+          <Property Name="DropoffID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DropoffName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Dropoffs" FromRole="Dropoffs" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BrandID" Type="Int64" Nullable="false" />
+          <Property Name="PurchasingPrice" Type="Double" Nullable="false" />
+          <Property Name="CanSize" Type="Double" />
+          <Property Name="TotalCans" Type="Int32" />
+          <Property Name="TotalLiters" Type="Double" />
+          <Property Name="TotalQuantity" Type="Int32" />
+          <Property Name="DropoffID" Type="Int64" Nullable="false" />
+          <Property Name="SupplierID" Type="Int64" Nullable="false" />
+          <Property Name="DateOfPurchase" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Dropoff" Relationship="Self.FK_Products_Dropoffs" FromRole="Products" ToRole="Dropoffs" />
+          <NavigationProperty Name="SaleItems" Relationship="Self.FK_SaleItems_Products" FromRole="Products" ToRole="SaleItems" />
+        </EntityType>
+        <EntityType Name="SaleInvoice">
+          <Key>
+            <PropertyRef Name="SaleID" />
+          </Key>
+          <Property Name="SaleID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SaleDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CustomerID" Type="Int64" />
+          <Property Name="TotalAmount" Type="Double" Nullable="false" />
+          <Property Name="SaleTypeID" Type="Int64" Nullable="false" />
+          <Property Name="SaleComments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Balance" Type="Double" Nullable="false" />
+          <NavigationProperty Name="SaleType" Relationship="Self.FK_SaleInvoice_SaleTypes" FromRole="SaleInvoice" ToRole="SaleTypes" />
+          <NavigationProperty Name="SaleItems" Relationship="Self.FK_SaleItems_SaleInvoice" FromRole="SaleInvoice" ToRole="SaleItems" />
+        </EntityType>
+        <EntityType Name="SaleItem">
+          <Key>
+            <PropertyRef Name="SaleID" />
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="SaleID" Type="Int64" Nullable="false" />
+          <Property Name="ProductID" Type="Int64" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="SellingPrice" Type="Double" Nullable="false" />
+          <Property Name="SellingLiters" Type="Double" />
+          <Property Name="CansSold" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_SaleItems_Products" FromRole="SaleItems" ToRole="Products" />
+          <NavigationProperty Name="SaleInvoice" Relationship="Self.FK_SaleItems_SaleInvoice" FromRole="SaleItems" ToRole="SaleInvoice" />
+        </EntityType>
+        <EntityType Name="SaleType">
+          <Key>
+            <PropertyRef Name="SaleTypeID" />
+          </Key>
+          <Property Name="SaleTypeID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SaleTypeName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="SaleInvoices" Relationship="Self.FK_SaleInvoice_SaleTypes" FromRole="SaleTypes" ToRole="SaleInvoice" />
+        </EntityType>
+        <Association Name="FK_Products_Dropoffs">
+          <End Role="Dropoffs" Type="Self.Dropoff" Multiplicity="1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dropoffs">
+              <PropertyRef Name="DropoffID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="DropoffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SaleItems_Products">
+          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="SaleItems" Type="Self.SaleItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="SaleItems">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SaleInvoice_SaleTypes">
+          <End Role="SaleTypes" Type="Self.SaleType" Multiplicity="1" />
+          <End Role="SaleInvoice" Type="Self.SaleInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaleTypes">
+              <PropertyRef Name="SaleTypeID" />
+            </Principal>
+            <Dependent Role="SaleInvoice">
+              <PropertyRef Name="SaleTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SaleItems_SaleInvoice">
+          <End Role="SaleInvoice" Type="Self.SaleInvoice" Multiplicity="1" />
+          <End Role="SaleItems" Type="Self.SaleItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaleInvoice">
+              <PropertyRef Name="SaleID" />
+            </Principal>
+            <Dependent Role="SaleItems">
+              <PropertyRef Name="SaleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FazilOilEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Dropoffs" EntityType="Self.Dropoff" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="SaleInvoices" EntityType="Self.SaleInvoice" />
+          <EntitySet Name="SaleItems" EntityType="Self.SaleItem" />
+          <EntitySet Name="SaleTypes" EntityType="Self.SaleType" />
+          <AssociationSet Name="FK_Products_Dropoffs" Association="Self.FK_Products_Dropoffs">
+            <End Role="Dropoffs" EntitySet="Dropoffs" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SaleItems_Products" Association="Self.FK_SaleItems_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="SaleItems" EntitySet="SaleItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SaleInvoice_SaleTypes" Association="Self.FK_SaleInvoice_SaleTypes">
+            <End Role="SaleTypes" EntitySet="SaleTypes" />
+            <End Role="SaleInvoice" EntitySet="SaleInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SaleItems_SaleInvoice" Association="Self.FK_SaleItems_SaleInvoice">
+            <End Role="SaleInvoice" EntitySet="SaleInvoices" />
+            <End Role="SaleItems" EntitySet="SaleItems" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FazilModelStoreContainer" CdmEntityContainer="FazilOilEntities">
+          <EntitySetMapping Name="Dropoffs">
+            <EntityTypeMapping TypeName="FazilModel.Dropoff">
+              <MappingFragment StoreEntitySet="Dropoffs">
+                <ScalarProperty Name="DropoffID" ColumnName="DropoffID" />
+                <ScalarProperty Name="DropoffName" ColumnName="DropoffName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="FazilModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="PurchasingPrice" ColumnName="PurchasingPrice" />
+                <ScalarProperty Name="CanSize" ColumnName="CanSize" />
+                <ScalarProperty Name="TotalCans" ColumnName="TotalCans" />
+                <ScalarProperty Name="TotalLiters" ColumnName="TotalLiters" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="DropoffID" ColumnName="DropoffID" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="DateOfPurchase" ColumnName="DateOfPurchase" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaleInvoices">
+            <EntityTypeMapping TypeName="FazilModel.SaleInvoice">
+              <MappingFragment StoreEntitySet="SaleInvoice">
+                <ScalarProperty Name="SaleID" ColumnName="SaleID" />
+                <ScalarProperty Name="SaleDateTime" ColumnName="SaleDateTime" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="SaleTypeID" ColumnName="SaleTypeID" />
+                <ScalarProperty Name="SaleComments" ColumnName="SaleComments" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaleItems">
+            <EntityTypeMapping TypeName="FazilModel.SaleItem">
+              <MappingFragment StoreEntitySet="SaleItems">
+                <ScalarProperty Name="SaleID" ColumnName="SaleID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+                <ScalarProperty Name="SellingLiters" ColumnName="SellingLiters" />
+                <ScalarProperty Name="CansSold" ColumnName="CansSold" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaleTypes">
+            <EntityTypeMapping TypeName="FazilModel.SaleType">
+              <MappingFragment StoreEntitySet="SaleTypes">
+                <ScalarProperty Name="SaleTypeID" ColumnName="SaleTypeID" />
+                <ScalarProperty Name="SaleTypeName" ColumnName="SaleTypeName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

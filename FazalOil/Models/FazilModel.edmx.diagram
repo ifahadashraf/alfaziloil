@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9c7ec6ea656149b1889f33c9dd1d64ab" Name="Diagram1">
+        <EntityTypeShape EntityType="FazilModel.Dropoff" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FazilModel.Product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="FazilModel.SaleInvoice" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FazilModel.SaleItem" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FazilModel.SaleType" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <AssociationConnector Association="FazilModel.FK_Products_Dropoffs" ManuallyRouted="false" />
+        <AssociationConnector Association="FazilModel.FK_SaleItems_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="FazilModel.FK_SaleInvoice_SaleTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="FazilModel.FK_SaleItems_SaleInvoice" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
