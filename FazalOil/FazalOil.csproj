@@ -127,6 +127,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ApiCalls.cs" />
+    <Compile Include="Models\Brand.cs">
+      <DependentUpon>FazilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Category.cs">
+      <DependentUpon>FazilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Dropoff.cs">
       <DependentUpon>FazilModel.tt</DependentUpon>
     </Compile>
@@ -158,6 +164,9 @@
     <Compile Include="Models\SaleType.cs">
       <DependentUpon>FazilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Supplier.cs">
+      <DependentUpon>FazilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +193,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\loading.gif" />
     <Content Include="js\sb-admin-2.js" />
     <Content Include="Models\FazilModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -251,6 +261,10 @@
     <Content Include="Models\FazilModel.edmx.diagram">
       <DependentUpon>FazilModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\alfaziloilagency - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\alfaziloilagency - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\faziloil - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\faziloil - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\calls.js" />
     <Content Include="Scripts\custom.js" />
@@ -409,7 +423,7 @@
     <Content Include="vendor\raphael\raphael.js" />
     <Content Include="vendor\raphael\raphael.min.js" />
     <Content Include="Views\Main\AddProduct.cshtml" />
-    <None Include="Views\Main\Index.cshtml" />
+    <None Include="Views\Main\Welcome.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

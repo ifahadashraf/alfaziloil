@@ -25,10 +25,13 @@ namespace FazalOil.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<Brand> Brands { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Dropoff> Dropoffs { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<SaleInvoice> SaleInvoices { get; set; }
         public DbSet<SaleItem> SaleItems { get; set; }
         public DbSet<SaleType> SaleTypes { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
     }
 }

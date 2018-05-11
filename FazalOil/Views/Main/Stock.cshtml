@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Al Fazal Oil Agency</title>
+    <title>Al-Fazil Oil Agency</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -38,6 +38,85 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font: 16px Arial;
+        }
+
+        .autocomplete {
+            /*the container must be positioned relative:*/
+            position: relative;
+            display: inline-block;
+        }
+
+        input {
+            border: 1px solid transparent;
+            background-color: #f1f1f1;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        input[type=text] {
+            background-color: #f1f1f1;
+            width: 100%;
+        }
+
+        input[type=submit] {
+            background-color: DodgerBlue;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            /*position the autocomplete items to be the same width as the container:*/
+            top: 100%;
+            left: 3%;
+            right: 3%;
+        }
+
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+        }
+
+        .autocomplete-items div:hover {
+            /*when hovering an item:*/
+            background-color: #e9e9e9;
+        }
+
+        .autocomplete-active {
+            /*when navigating through the items using the arrow keys:*/
+            background-color: DodgerBlue !important;
+            color: #ffffff;
+        }
+
+        .loader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url('../Images/loading.gif') 50% 50% no-repeat rgb(249,249,249);
+        }
+
+        .gone{
+            display:none;
+        }
+    </style>
+
 
 </head>
 
@@ -309,56 +388,63 @@
             <!-- /.navbar-static-side -->
         </nav>
 
-    <div id="page-wrapper">
+        <div id="page-wrapper">
+            <div class="loader"></div>
             <div class="row">
                 <div class="page-header">
-                        <h1>Stock</h1>                    
+                    <h1>Stock</h1>
+                </div>
+                <div class="row">
+                    <div class="col-lg-10"></div>
+                    <div class="col-lg-2">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span>&nbsp Add product</button>
+                    </div>
                 </div>
             </div>
-                
-            <div class="row">         
-                    
-                 <div class="col-lg-3">
-                    
+
+            <div class="row">
+
+                <div class="col-lg-3">
+
                     <div class="form-group">
-                       <label>Category</label>
-                       <select class="form-control">
-                         <option>Oil</option>
-                         <option>Filters</option>
-                         <option>Others</option>
-                        </select>
-                    </div>
-                 </div>
-                    
-                <div class="col-lg-3">            
-                    <div class="form-group">
-                       <label>Brand</label>
-                       <select class="form-control">
-                         <option>Zic</option>
-                         <option>Shell</option>
-                         <option>Halloween</option>
-                         <option>Toyota</option>
-                        </select>
-                    </div>
-                </div>
-                        
-                <div class="col-lg-3">            
-                    <div class="form-group">
-                       <label>Location</label>
-                       <select class="form-control">
-                         <option>Shop</option>
-                         <option>Depot</option>
+                        <label>Category</label>
+                        <select class="form-control">
+                            <option>Oil</option>
+                            <option>Filters</option>
+                            <option>Others</option>
                         </select>
                     </div>
                 </div>
 
-                <div class="col-lg-3">            
+                <div class="col-lg-3">
                     <div class="form-group">
-                       <label>Date</label>
-                       <input type = "date" class = "form-control" data-date-inline-picker="true">
+                        <label>Brand</label>
+                        <select class="form-control">
+                            <option>Zic</option>
+                            <option>Shell</option>
+                            <option>Halloween</option>
+                            <option>Toyota</option>
+                        </select>
                     </div>
                 </div>
-                    
+
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label>Location</label>
+                        <select class="form-control">
+                            <option>Shop</option>
+                            <option>Depot</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" class="form-control" data-date-inline-picker="true">
+                    </div>
+                </div>
+
             </div>
             <!-- /.row -->
             <div class="row">
@@ -372,322 +458,23 @@
                             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
+                                        <th>P-code</th>
                                         <th>Name of Product</th>
-                                        <th>Quantity</th>
-                                        <th>No. of Litres</th>
+                                        <th>Can size</th>
                                         <th>No. of Cans</th>
-                                        <th>Purchasing Date</th>
+                                        <th>No. of Litres</th>
+                                        <th>Quantity</th>
                                         <th>Price</th>
+                                        <th>Purchasing Date</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr class="odd gradeX">
-                                        <td>Zic A+</td>
-                                        <td>112</td>
-                                        <td>250</td>
-                                        <td>250</td>
-                                        <td class="center">12-4-2018</td>
-                                        <td class="center">1200</td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td>Zic A+</td>
-                                        <td>112</td>
-                                        <td>250</td>
-                                        <td>250</td>
-                                        <td class="center">12-4-2018</td>
-                                        <td class="center">1200</td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>Zic A+</td>
-                                        <td>112</td>
-                                        <td>250</td>
-                                        <td>250</td>
-                                        <td class="center">12-4-2018</td>
-                                        <td class="center">1200</td>
-                                    </tr>
-                                    <tr class="even gradeA">
-                                        <td>Zic A+</td>
-                                        <td>112</td>
-                                        <td>250</td>
-                                        <td>250</td>
-                                        <td class="center">12-4-2018</td>
-                                        <td class="center">1200</td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>Zic A+</td>
-                                        <td>112</td>
-                                        <td>250</td>
-                                        <td>250</td>
-                                        <td class="center">12-4-2018</td>
-                                        <td class="center">1200</td>
-                                    </tr>
-                                    <!--<tr class="even gradeA">
-                                        <td>Zic Hiflo</td>
-                                        <td>89</td>
-                                        <td>110</td>
-                                        <td class="center">01-02-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Zic Hiflo</td>
-                                        <td>89</td>
-                                        <td>110</td>
-                                        <td class="center">01-02-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Zic Hiflo</td>
-                                        <td>89</td>
-                                        <td>110</td>
-                                        <td class="center">01-02-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Zic Hiflo</td>
-                                        <td>89</td>
-                                        <td>110</td>
-                                        <td class="center">01-02-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Zic Hiflo</td>
-                                        <td>89</td>
-                                        <td>110</td>
-                                        <td class="center">01-02-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Zic Hiflo</td>
-                                        <td>89</td>
-                                        <td>110</td>
-                                        <td class="center">01-02-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Zic Hiflo</td>
-                                        <td>89</td>
-                                        <td>110</td>
-                                        <td class="center">01-02-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Zic Hiflo</td>
-                                        <td>89</td>
-                                        <td>250</td>
-                                        <td>110</td>
-                                        <td class="center">01-02-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Zic Hiflo</td>
-                                        <td>89</td>
-                                        <td>110</td>
-                                        <td class="center">01-02-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                  
-                                   <tr class="gradeA">
-                                        <td>Shell 20/50</td>
-                                        <td>102</td>
-                                        <td>250</td>
-                                        <td>250</td>
-                                        <td class="center">18-01-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Shell 20/50</td>
-                                        <td>102</td>
-                                        <td>250</td>
-                                        <td class="center">18-01-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                   <tr class="gradeA">
-                                        <td>Shell 20/50</td>
-                                        <td>102</td>
-                                        <td>250</td>
-                                        <td>250</td>
-                                        <td class="center">18-01-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Shell 20/50</td>
-                                        <td>102</td>
-                                        <td>250</td>
-                                        <td class="center">18-01-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Shell 20/50</td>
-                                        <td>102</td>
-                                        <td>250</td>
-                                        <td>250</td>
-                                        <td class="center">18-01-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Shell 20/50</td>
-                                        <td>102</td>
-                                        <td>250</td>
-                                        <td class="center">18-01-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Shell 20/50</td>
-                                        <td>102</td>
-                                        <td>250</td>
-                                        <td>250</td>
-                                        <td class="center">18-01-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Shell 20/50</td>
-                                        <td>102</td>
-                                        <td>250</td>
-                                        <td class="center">18-01-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Shell 20/50</td>
-                                        <td>102</td>
-                                        <td>250</td>
-                                        <td>250</td>
-                                        <td class="center">18-01-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Havoleen Formula</td>
-                                        <td>56</td>
-                                        <td>112</td>
-                                        <td class="center">03-05-2018</td>
-                                        <td class="center">1350</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Havoleen Formula</td>
-                                        <td>56</td>
-                                        <td>112</td>
-                                        <td>250</td>
-                                        <td class="center">03-05-2018</td>
-                                        <td class="center">1350</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Havoleen Formula</td>
-                                        <td>56</td>
-                                        <td>112</td>
-                                        <td class="center">03-05-2018</td>
-                                        <td class="center">1350</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Havoleen Formula</td>
-                                        <td>56</td>
-                                        <td>112</td>
-                                        <td class="center">03-05-2018</td>
-                                        <td class="center">1350</td>
-                                       
-                                    </tr>
-                                    <tr class="gradeC">
-                                        <td>Havoleen Formula</td>
-                                        <td>56</td>
-                                        <td>112</td>
-                                        <td>250</td>
-                                        <td class="center">03-05-2018</td>
-                                        <td class="center">1350</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Havoleen Formula</td>
-                                        <td>56</td>
-                                        <td>112</td>
-                                        <td class="center">03-05-2018</td>
-                                        <td class="center">1350</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Havoleen Formula</td>
-                                        <td>56</td>
-                                        <td>112</td>
-                                        <td class="center">03-05-2018</td>
-                                        <td class="center">1350</td>
-                                    </tr>
-                                    <tr class="gradeX">
-                                        <td>Havoleen Formula</td>
-                                        <td>56</td>
-                                        <td>112</td>
-                                        <td class="center">03-05-2018</td>
-                                        <td class="center">1350</td>
-                                    </tr>
-                                    <tr class="gradeC">
-                                        <td>Havoleen Formula</td>
-                                        <td>56</td>
-                                        <td>112</td>
-                                        <td class="center">03-05-2018</td>
-                                        <td class="center">1350</td>
-                                    </tr>
-                                    <tr class="gradeC">
-                                        <td>Zic Hiflo</td>
-                                        <td>89</td>
-                                        <td>110</td>
-                                        <td class="center">01-02-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Zic Hiflo</td>
-                                        <td>89</td>
-                                        <td>110</td>
-                                        <td class="center">01-02-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Zic Hiflo</td>
-                                        <td>89</td>
-                                        <td>110</td>
-                                        <td class="center">01-02-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeX">
-                                        <td>Zic Hiflo</td>
-                                        <td>89</td>
-                                        <td>110</td>
-                                        <td class="center">01-02-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeX">
-                                        <td>Zic Hiflo</td>
-                                        <td>89</td>
-                                        <td>110</td>
-                                        <td>250</td>
-                                        <td class="center">01-02-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeX">
-                                        <td>Zic Hiflo</td>
-                                        <td>89</td>
-                                        <td>110</td>
-                                        <td class="center">01-02-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeC">
-                                        <td>Zic Hiflo</td>
-                                        <td>89</td>
-                                        <td>110</td>
-                                        <td class="center">01-02-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeC">
-                                        <td>Zic Hiflo</td>
-                                        <td>89</td>
-                                        <td>110</td>
-                                        <td class="center">01-02-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>
-                                    <tr class="gradeU">
-                                        <td>Zic Hiflo</td>
-                                        <td>89</td>
-                                        <td>110</td>
-                                        <td class="center">01-02-2018</td>
-                                        <td class="center">950</td>
-                                    </tr>-->
-                                </tbody>
+                                @*<tbody id="listOfProducts">
+
+                                </tbody>*@
                             </table>
 
-                 </div>
+                        </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
@@ -695,9 +482,142 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
+            <div id="myModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
 
-                      
-    </div>
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Product</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div id="alertdiv" class="row">
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Location:</label>
+                                                <select id="selectLocation" onchange="supllier()" class="form-control">
+                                                    <option value="1">Shop</option>
+                                                    <option>Depot</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Supplier:</label>
+                                                <select id="selectSupplier" class="form-control">
+                                                    <option value="1">Direct</option>
+                                                    <option>Depot</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Date</label>
+                                                <input id="datePurchase" type="date" class="form-control" data-date-inline-picker="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Category:</label>
+                                                <select id="selectCategory" onchange="categories()" class="form-control">
+                                                    <option value="1">Oil</option>
+                                                    <option value="2">Filters</option>
+                                                    <option>Others</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <p id="modal_pid" style="display:none">-1</p>
+                                                <label>Product Name: </label>
+                                                <input id="txtProductName" class="form-control" placeholder="i.e. Zic Hiflo" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Brand Name:</label>
+                                                <select id="selectBrand" class="form-control">
+                                                    <option>-Brand-</option>
+                                                    @*<option value="1">Zic</option>
+                                                    <option>Shell</option>
+                                                    <option>Toyota</option>
+                                                    <option>Honda</option>
+                                                    <option>Halloween</option>
+                                                    <option>Other</option>*@
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div id="canSizeDiv" class="form-group" style="display: none">
+                                                <label>Can Size: </label>
+                                                <input type="number" min="1" id="txtCanSize" class="form-control" placeholder="Can Size i.e 4L">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div id="totalCansDiv" class="form-group" style="display: none">
+                                                <label>Number of Cans:</label>
+                                                <input type="number" min="1" id="txtNoOfCans" onkeyup="calculateLitres()" class="form-control" placeholder="Number of Cans">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div id="totalLitersDiv" class="form-group" style="display: none">
+                                                <label>Number of Litres:</label>
+                                                <input id="txtNoOfLitres" class="form-control" placeholder="Number of Litres" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div id="totalQuantityDiv" class="form-group" style="display: none">
+                                                <label>Total Quantity: </label>
+                                                <input type="number" min="1" id="txtQuantity" class="form-control" placeholder="Total Quantity">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div id="priceDiv" class="form-group" style="display: none">
+                                                <label>Price:</label>
+                                                <input type="number" min="1" id="txtPrice" onkeyup="totalPrice()" class="form-control" placeholder="Price of each Piece">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div id="totalPriceDiv" class="form-group" style="display: none">
+                                                <label>Total Price:</label>
+                                                <input id="txtTotalPrice" class="form-control" placeholder="Total Price" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <button id="btnSubmit" onclick="saveProduct()" class="btn btn-outline btn-primary col-lg-12">Save</button>
+                                </div>
+                                <div class="col-lg-2">
+                                    <button id="btnClear" type="reset" class="btn btn-outline btn-danger col-lg-12">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        </div>
     <!-- /#wrapper -->
 
     <!-- jQuery -->
@@ -722,15 +642,224 @@
     <!-- Custom Theme JavaScript -->
     <script src="~/dist/js/sb-admin-2.js"></script>
 
-   <script src="~/Scripts/custom.js"></script>
-
+    <script src="~/Scripts/custom.js"></script>
     <script>
-    $(document).ready(function() {
-        $('#dataTables-example').DataTable({
-            responsive: true
+
+        var indices = [];
+        var productNamesList = [];
+
+        $(document).ready(function () {
+
+            var dt = $('#dataTables-example').DataTable({
+                responsive: true,
+                "pageLength": 500
+            });
+
+            getCategories();
+            getBrands();
+            getSuppliers();
+            getDropoffs();
+
+            $(".loader").removeClass("gone");
+
+            getProductName(function (arr) {
+                var products = $.parseJSON(arr);
+                $("#listOfProducts").html('');
+                $.each(products, function (index, item) {
+                    indices.push(item.ProductID);
+                    productNamesList.push(item.ProductName);
+                    dt.row.add([
+                        item.ProductID,
+                        item.ProductName,
+                        item.CanSize,
+                        item.TotalCans,
+                        Number(item.TotalLiters).toFixed(2),
+                        item.TotalQuantity,
+                        Number(item.PurchasingPrice).toFixed(2),
+                        item.DateOfPurchase,
+                        '<div><p id="sp_id" style="display:none">' + item.SupplierID + '</p>' +
+                        '<p id="df_id" style="display:none">' + item.DropoffID + '</p>' +
+                        '<p id="bd_id" style="display:none">' + item.BrandID + '</p>' +
+                        '<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning" onclick="updateModal('+index+')"><span class="glyphicon glyphicon-edit"></span>&nbspEdit</button>'+
+                        '<p id="cat_id" style="display:none">'+item.CategoryID+'</p></div>'
+                    ]).draw();
+                    //$("#listOfProducts").append('<tr id="tr' + item.ProductID + '" class="odd gradeX"><td>' + item.ProductName + '</td><td>' + ((item.TotalQuantity == null) ? 'N/A' : item.TotalQuantity) + '</td><td>' + ((item.TotalLiters == null) ? 'N/A' : item.TotalLiters) + '</td><td>' + ((item.TotalCans == null) ? 'N/A' : item.TotalCans) + '</td><td class="center">' + item.DateOfPurchase + '</td><td class="center">' + item.PurchasingPrice + '</td><td class="center"><button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning" onclick="updateModal(\'tr' + item.ProductID + '\')"><span class="glyphicon glyphicon-edit"></span>&nbspEdit</button></td><td id="pid" style="display:none">' + item.ProductID + '</td><td style="display:none">' + item.CategoryID + '</td></tr>');
+                });
+                $(".loader").addClass("gone");
+                autocomplete(document.getElementById("txtProductName"), productNamesList);
+            });
         });
-    });
+
+        function autocomplete(inp, arr) {
+            /*the autocomplete function takes two arguments,
+            the text field element and an array of possible autocompleted values:*/
+            var currentFocus;
+            /*execute a function when someone writes in the text field:*/
+            inp.addEventListener("input", function (e) {
+                var a, b, i, val = this.value;
+                /*close any already open lists of autocompleted values*/
+                closeAllLists();
+                if (!val) { return false; }
+                currentFocus = -1;
+                /*create a DIV element that will contain the items (values):*/
+                a = document.createElement("DIV");
+                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("class", "autocomplete-items");
+                /*append the DIV element as a child of the autocomplete container:*/
+                this.parentNode.appendChild(a);
+                /*for each item in the array...*/
+                for (i = 0; i < arr.length; i++) {
+                    /*check if the item starts with the same letters as the text field value:*/
+                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                        /*create a DIV element for each matching element:*/
+                        b = document.createElement("DIV");
+                        /*make the matching letters bold:*/
+                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                        b.innerHTML += arr[i].substr(val.length);
+                        /*insert a input field that will hold the current array item's value:*/
+                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                        /*execute a function when someone clicks on the item value (DIV element):*/
+                        b.addEventListener("click", function (e) {
+                            /*insert the value for the autocomplete text field:*/
+                            inp.value = this.getElementsByTagName("input")[0].value;
+                            /*close the list of autocompleted values,
+                            (or any other open lists of autocompleted values:*/
+                            closeAllLists();
+                        });
+                        a.appendChild(b);
+                    }
+                }
+            });
+            /*execute a function presses a key on the keyboard:*/
+            inp.addEventListener("keydown", function (e) {
+                var x = document.getElementById(this.id + "autocomplete-list");
+                if (x) x = x.getElementsByTagName("div");
+                if (e.keyCode == 40) {
+                    /*If the arrow DOWN key is pressed,
+                    increase the currentFocus variable:*/
+                    currentFocus++;
+                    /*and and make the current item more visible:*/
+                    addActive(x);
+                }
+                else if (e.keyCode == 38) { //up
+                    /*If the arrow UP key is pressed,
+                    decrease the currentFocus variable:*/
+                    currentFocus--;
+                    /*and and make the current item more visible:*/
+                    addActive(x);
+                }
+                else if (e.keyCode == 13) {
+                    /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                    e.preventDefault();
+                    if (currentFocus > -1) {
+                        /*and simulate a click on the "active" item:*/
+                        if (x) x[currentFocus].click();
+
+                    }
+                }
+            });
+            function addActive(x) {
+                /*a function to classify an item as "active":*/
+                if (!x) return false;
+                /*start by removing the "active" class on all items:*/
+                removeActive(x);
+                if (currentFocus >= x.length) currentFocus = 0;
+                if (currentFocus < 0) currentFocus = (x.length - 1);
+                /*add class "autocomplete-active":*/
+                x[currentFocus].classList.add("autocomplete-active");
+            }
+            function removeActive(x) {
+                /*a function to remove the "active" class from all autocomplete items:*/
+                for (var i = 0; i < x.length; i++) {
+                    x[i].classList.remove("autocomplete-active");
+                }
+            }
+            function closeAllLists(elmnt) {
+                /*close all autocomplete lists in the document,
+                except the one passed as an argument:*/
+                var x = document.getElementsByClassName("autocomplete-items");
+                for (var i = 0; i < x.length; i++) {
+                    if (elmnt != x[i] && elmnt != inp) {
+                        x[i].parentNode.removeChild(x[i]);
+                    }
+                }
+            }
+            /*execute a function when someone clicks in the document:*/
+            document.addEventListener("click", function (e) {
+                closeAllLists(e.target);
+            });
+        }
+
+        $('#myModal').on('hidden.bs.modal', function () {
+
+            var dt = $('#dataTables-example').DataTable();
+
+            engineOilFields("none");
+            filterFields("none");
+
+            getProductName(function (arr) {
+                var products = $.parseJSON(arr);
+                dt.clear();
+                $.each(products, function (index, item) {
+                    indices.push(item.ProductID);
+                    productNamesList.push(item.ProductName);
+                    dt.row.add([
+                        item.ProductID,
+                        item.ProductName,
+                        item.CanSize,
+                        item.TotalCans,
+                        Number(item.TotalLiters).toFixed(2),
+                        item.TotalQuantity,
+                        Number(item.PurchasingPrice).toFixed(2),
+                        item.DateOfPurchase,
+                        '<div><p id="sp_id" style="display:none">' + item.SupplierID + '</p>' +
+                        '<p id="df_id" style="display:none">' + item.DropoffID + '</p>' +
+                        '<p id="bd_id" style="display:none">' + item.BrandID + '</p>' +
+                        '<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning" onclick="updateModal(' + index + ')"><span class="glyphicon glyphicon-edit"></span>&nbspEdit</button>' +
+                        '<p id="cat_id" style="display:none">' + item.CategoryID + '</p></div>'
+                    ]).draw();
+                    //$("#listOfProducts").append('<tr id="tr' + item.ProductID + '" class="odd gradeX"><td>' + item.ProductName + '</td><td>' + ((item.TotalQuantity == null) ? 'N/A' : item.TotalQuantity) + '</td><td>' + ((item.TotalLiters == null) ? 'N/A' : item.TotalLiters) + '</td><td>' + ((item.TotalCans == null) ? 'N/A' : item.TotalCans) + '</td><td class="center">' + item.DateOfPurchase + '</td><td class="center">' + item.PurchasingPrice + '</td><td class="center"><button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning" onclick="updateModal(\'tr' + item.ProductID + '\')"><span class="glyphicon glyphicon-edit"></span>&nbspEdit</button></td><td id="pid" style="display:none">' + item.ProductID + '</td><td style="display:none">' + item.CategoryID + '</td></tr>');
+                });
+                autocomplete(document.getElementById("txtProductName"), productNamesList);
+            });
+        })
+
+        function updateModal(pid) {
+
+            pid += 1;
+
+            $("#btnSubmit").text('Update');
+
+            var row = document.getElementById("dataTables-example").rows[pid];
+
+            $("#modal_pid").html(row.cells[0].innerHTML);
+            $("#txtProductName").val(row.cells[1].innerHTML);
+            $("#txtCanSize").val(row.cells[2].innerHTML);
+            $("#txtNoOfCans").val(row.cells[3].innerHTML);
+            $("#txtNoOfLitres").val(row.cells[4].innerHTML);
+            $("#txtQuantity").val(row.cells[5].innerHTML);
+            $('#selectBrand option[value="' + 1 + '"]').attr("selected", "selected");
+            $("#txtPrice").val(row.cells[6].innerHTML);
+            $("#datePurchase").val(row.cells[7].innerHTML);
+
+            var insideHTML = row.cells[8].innerHTML;
+            var catid = $(insideHTML).find("#cat_id").html();
+            var spid = $(insideHTML).find("#sp_id").html();
+            var dfid = $(insideHTML).find("#df_id").html();
+            var bdid = $(insideHTML).find("#bd_id").html();
+
+            $('#selectLocation option[value=' + dfid + ']').prop("selected", true);
+            $('#selectSupplier option[value=' + spid + ']').prop("selected", true);
+            $('#selectCategory option[value=' + catid + ']').prop("selected", true);
+            $('#selectBrand option[value=' + bdid + ']').prop("selected", true);
+
+            categories();
+            totalPrice();
+            
+        }
+
     </script>
+
         
 </body>
 

@@ -10,7 +10,7 @@ namespace FazalOil.Controllers
     {
         //
         // GET: /Main/
-        public ActionResult Index()
+        public ActionResult Welcome()
         {
             return View();
         }

@@ -37,6 +37,84 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font: 16px Arial;
+        }
+
+        .autocomplete {
+            /*the container must be positioned relative:*/
+            position: relative;
+            display: inline-block;
+        }
+
+        input {
+            border: 1px solid transparent;
+            background-color: #f1f1f1;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+            input[type=text] {
+                background-color: #f1f1f1;
+                width: 100%;
+            }
+
+            input[type=submit] {
+                background-color: DodgerBlue;
+                color: #fff;
+                cursor: pointer;
+            }
+
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            /*position the autocomplete items to be the same width as the container:*/
+            top: 100%;
+            left: 3%;
+            right: 3%;
+        }
+
+            .autocomplete-items div {
+                padding: 10px;
+                cursor: pointer;
+                background-color: #fff;
+                border-bottom: 1px solid #d4d4d4;
+            }
+
+                .autocomplete-items div:hover {
+                    /*when hovering an item:*/
+                    background-color: #e9e9e9;
+                }
+
+        .autocomplete-active {
+            /*when navigating through the items using the arrow keys:*/
+            background-color: DodgerBlue !important;
+            color: #ffffff;
+        }
+
+        .loader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url('../Images/loading.gif') 50% 50% no-repeat rgb(249,249,249);
+        }
+
+        .gone {
+            display: none;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -313,6 +391,7 @@
         </nav>
 
         <div id="page-wrapper">
+            <div class="loader"></div>
             <div class="row">
                 <div class="page-header">
                     <h1>Al Fazil Oil Agency</h1>
@@ -355,73 +434,32 @@
                     <div class="form-group">
                         <div class="col-lg-8">
                             <div class="row">
-                                <form role="form">
-                                    <div class="form-group input-group">
-                                        <span class="input-group-addon"><b>Search Product: </b></span>
-                                        <input type="text" class="form-control" placeholder="Product Name">
-                                    </div>
-                                </form>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon"><b>Search Product: </b></span>
+                                    <input id="txtProductName" type="text" class="form-control" placeholder="Product Name">
+                                </div>
                             </div>
                             <div class="row">
-                                <div class="panel-body">
+                                <div class="panel-body" style="overflow-y: scroll; height:400px;">
                                     <div class="table-responsive table-bordered">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th class="col-lg-1">Sr#</th>
-                                                    <th class="col-sm-4">Product Name</th>
-                                                    <th class="col-sm-1">Litres</th>
-                                                    <th class="col-sm-1">Cans</th>
-                                                    <th class="col-sm-2">Rate</th>
-                                                    <th class="col-lg-1">Quantity</th>
-                                                    <th class="col-lg-1">Total</th>
-                                                    <th class="col-lg-1">Delete</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Shell Advance</td>
-                                                    <td><input class="form-control"></td>
-                                                    <td><input class="form-control"></td>
-                                                    <td><input class="form-control"></td>
-                                                    <td><input class="form-control" disabled></td>
-                                                    <td>1080</td>
-                                                    <td><button type="button" class="btn btn-link">Delete</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Zic A+</td>
-                                                    <td><input class="form-control"></td>
-                                                    <td><input class="form-control"></td>
-                                                    <td><input class="form-control"></td>
-                                                    <td><input class="form-control" disabled></td>
-                                                    <td>2300</td>
-                                                    <td><button type="button" class="btn btn-link">Delete</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>Air Filter</td>
-                                                    <td><input class="form-control"></td>
-                                                    <td><input class="form-control"></td>
-                                                    <td><input class="form-control"></td>
-                                                    <td><input class="form-control" disabled></td>
-                                                    <td>400</td>
-                                                    <td><button type="button" class="btn btn-link">Delete</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>Shell Rimula</td>
-                                                    <td><input class="form-control"></td>
-                                                    <td><input class="form-control"></td>
-                                                    <td><input class="form-control"></td>
-                                                    <td><input class="form-control" disabled></td>
-                                                    <td>1080</td>
-                                                    <td><button type="button" class="btn btn-link">Delete</button></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                            <table id="cartItems" class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sr#</th>
+                                                        <th class="col-md-3">Product Name</th>
+                                                        <th>Litres</th>
+                                                        <th>Cans</th>
+                                                        <th>Quantity</th>
+                                                        <th>Rate</th>
+                                                        <th>Total</th>
+                                                        <th>Delete</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="listOfItems">
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -471,7 +509,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <label>Net Total: </label>
-                                    <input type="text" id="txtNetTotal" class="form-control input-lg" disabled>
+                                    <input type="text" id="txtNetTotal" class="form-control input-lg" value="0" disabled>
                                 </div>
                             </div>
                             <div class="row">
@@ -482,7 +520,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <label>Cash: </label>
-                                    <input type="number" id="txtCash" class="form-control input-lg">
+                                    <input type="number" id="txtCash" class="form-control input-lg" onchange="calBalance(this)">
                                 </div>
                             </div>
                             <div class="row">
@@ -610,6 +648,246 @@
     <script src="~/dist/js/sb-admin-2.js"></script>
 
     <script src="~/Scripts/custom.js"></script>
+
+    <script>
+
+        var indices = [];
+        var productNamesList = [];
+        var allProducts = [];
+        var arrOfTotals = [];
+
+        $(document).ready(function () {
+            $(".loader").removeClass("gone");
+
+            getProductName(function (arr) {
+                $(".loader").addClass("gone");
+                var products = $.parseJSON(arr);
+                $.each(products, function (index, item) {
+
+                    indices.push(item.ProductID);
+                    productNamesList.push(item.ProductName);
+                    allProducts.push(item);
+
+                });
+
+                autocomplete(document.getElementById("txtProductName"), productNamesList);
+            });
+        });
+
+        function autocomplete(inp, arr) {
+            /*the autocomplete function takes two arguments,
+            the text field element and an array of possible autocompleted values:*/
+            var currentFocus;
+            /*execute a function when someone writes in the text field:*/
+            inp.addEventListener("input", function (e) {
+                var a, b, i, val = this.value;
+                /*close any already open lists of autocompleted values*/
+                closeAllLists();
+                if (!val) { return false; }
+                currentFocus = -1;
+                /*create a DIV element that will contain the items (values):*/
+                a = document.createElement("DIV");
+                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("class", "autocomplete-items");
+                /*append the DIV element as a child of the autocomplete container:*/
+                this.parentNode.appendChild(a);
+                /*for each item in the array...*/
+                for (i = 0; i < arr.length; i++) {
+                    /*check if the item starts with the same letters as the text field value:*/
+                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                        /*create a DIV element for each matching element:*/
+                        b = document.createElement("DIV");
+                        /*make the matching letters bold:*/
+                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                        b.innerHTML += arr[i].substr(val.length);
+                        /*insert a input field that will hold the current array item's value:*/
+                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                        /*execute a function when someone clicks on the item value (DIV element):*/
+                        b.addEventListener("click", function (e) {
+                            /*insert the value for the autocomplete text field:*/
+                            var selectedValue = this.getElementsByTagName("input")[0].value;
+                            //inp.value = selectedValue;
+                            var indexOfObj = productNamesList.indexOf(selectedValue);
+                            var obj = allProducts[indexOfObj];
+
+                            var litreField = '';
+                            var canField = '';
+                            var rateField = '';
+                            var quantityField = '';
+
+                            if (obj.CategoryID == 1 || obj.CategoryID == '1')
+                            {
+                                quantityField = 'disabled';
+                            }
+                            else if (obj.CategoryID == 2 || obj.CategoryID == '2')
+                            {
+                                quantityField = 'disabled';
+                                canField = 'disabled';
+                            }
+                            else
+                            {
+                                litreField = 'disabled';
+                                canField = 'disabled';
+                            }
+
+                            var idOfRow = Date.now();
+
+                            $('#listOfItems').append(
+                                '<tr id="cart' + idOfRow + '">' +
+                                '<td>' + obj.ProductID + '</td>' +
+                                '<td>' + obj.ProductName + '</td>' +
+                                '<td><input id="txtNoOfLitres' + idOfRow + '" class="form-control" ' + litreField + '></td>' +
+                                '<td><input id="txtNoOfCans' + idOfRow + '" class="form-control" ' + canField + '></td>' +
+                                '<td><input id="txtQty' + idOfRow + '" class="form-control" ' + quantityField + '></td>' +
+                                '<td><input id="txtPrice' + idOfRow + '" class="form-control" onkeyup="calTotalPrice(' + idOfRow + ')" ' + rateField + ' onchange="calNetTotal(' + idOfRow + ')"></td>' +
+                                '<td><input id="row' + idOfRow + '" class="form-control" disabled></td>' +
+                                '<td><button type="button" class="btn btn-link" onclick="delCart(' + idOfRow + ')">Delete</button></td>' +
+                                '</tr>')
+
+                            /*close the list of autocompleted values,
+                            (or any other open lists of autocompleted values:*/
+                            closeAllLists();
+                        });
+                        a.appendChild(b);
+                    }
+                }
+            });
+            /*execute a function presses a key on the keyboard:*/
+            inp.addEventListener("keydown", function (e) {
+                var x = document.getElementById(this.id + "autocomplete-list");
+                if (x) x = x.getElementsByTagName("div");
+                if (e.keyCode == 40) {
+                    /*If the arrow DOWN key is pressed,
+                    increase the currentFocus variable:*/
+                    currentFocus++;
+                    /*and and make the current item more visible:*/
+                    addActive(x);
+                }
+                else if (e.keyCode == 38) { //up
+                    /*If the arrow UP key is pressed,
+                    decrease the currentFocus variable:*/
+                    currentFocus--;
+                    /*and and make the current item more visible:*/
+                    addActive(x);
+                }
+                else if (e.keyCode == 13) {
+                    /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                    e.preventDefault();
+                    if (currentFocus > -1) {
+                        /*and simulate a click on the "active" item:*/
+                        if (x) x[currentFocus].click();
+
+                    }
+                }
+            });
+            function addActive(x) {
+                /*a function to classify an item as "active":*/
+                if (!x) return false;
+                /*start by removing the "active" class on all items:*/
+                removeActive(x);
+                if (currentFocus >= x.length) currentFocus = 0;
+                if (currentFocus < 0) currentFocus = (x.length - 1);
+                /*add class "autocomplete-active":*/
+                x[currentFocus].classList.add("autocomplete-active");
+            }
+            function removeActive(x) {
+                /*a function to remove the "active" class from all autocomplete items:*/
+                for (var i = 0; i < x.length; i++) {
+                    x[i].classList.remove("autocomplete-active");
+                }
+            }
+            function closeAllLists(elmnt) {
+                /*close all autocomplete lists in the document,
+                except the one passed as an argument:*/
+                var x = document.getElementsByClassName("autocomplete-items");
+                for (var i = 0; i < x.length; i++) {
+                    if (elmnt != x[i] && elmnt != inp) {
+                        x[i].parentNode.removeChild(x[i]);
+                    }
+                }
+            }
+            /*execute a function when someone clicks in the document:*/
+            document.addEventListener("click", function (e) {
+                closeAllLists(e.target);
+            });
+        }
+        function calTotalPrice(id)
+        {
+            var id1 = 'txtPrice' + id;
+            var id2 = 'txtNoOfCans' + id;
+            var id3 = 'txtNoOfLitres' + id;
+            var id4 = 'txtQty' + id;
+
+            var canPrice = document.getElementById(id1).value;
+            var numberOfCans = document.getElementById(id2).value;
+            var totalLiters = document.getElementById(id3).value;
+            var qty = document.getElementById(id4).value;
+
+            
+            if ($("#" + id2).is(":disabled")) {
+                if ($("#" + id3).is(":disabled")) {  //filters and others
+                    $('#row' + id).val((qty * canPrice));
+                }
+                else {
+                    $('#row' + id).val((totalLiters * canPrice)); //raw oil
+                }
+            }
+            else { //engine oil
+                if (numberOfCans == 0) {
+                    $('#row' + id).val((totalLiters * canPrice));
+                }
+                else {
+                    $('#row' + id).val((numberOfCans * canPrice));
+                }
+            }
+        }
+
+        function calNetTotal(id) {
+            $.each(arrOfTotals, function (index, item) {
+                if (item.Id == id) {
+                    arrOfTotals.splice(index, 1);
+                    return false;
+                }
+            });
+
+            arrOfTotals.push({
+                Id: id,
+                Total: parseInt($('#row' + id).val())
+            });
+
+            var sum = 0;
+            $.each(arrOfTotals, function (index, item) {
+                sum += item.Total;
+            });
+
+            $('#txtNetTotal').val(sum);
+        }
+
+        function minusNetTotal(id) {
+            $.each(arrOfTotals, function (index, item) {
+                if (item.Id == id) {
+                    $('#txtNetTotal').val(parseInt($('#txtNetTotal').val()) - item.Total);
+                    arrOfTotals.splice(index, 1);
+                    return false;
+                }
+            });
+        }
+
+        function delCart(id) {
+
+            minusNetTotal(id);
+
+            var id1 = '#cart' + id;
+            $(id1).remove();
+        }
+
+        function calBalance(ctx) {
+            var netTotal = parseInt($('#txtNetTotal').val());
+            var cash = parseInt($(ctx).val());
+
+            $('#txtBalance').val(cash - netTotal);
+        }
+    </script>
 
 
 </body>
