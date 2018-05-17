@@ -4,22 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="108df4a07dcd425abd9e1ebb883c288f" Name="Diagram1">
+      <Diagram DiagramId="108df4a07dcd425abd9e1ebb883c288f" Name="Diagram1" ZoomLevel="97">
         <EntityTypeShape EntityType="FazilModel.Brand" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FazilModel.Category" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FazilModel.Dropoff" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FazilModel.Product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="FazilModel.SaleInvoice" Width="1.5" PointX="3" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FazilModel.SaleItem" Width="1.5" PointX="5.25" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="FazilModel.SaleType" Width="1.5" PointX="0.75" PointY="14.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FazilModel.Supplier" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
         <AssociationConnector Association="FazilModel.FK_Products_Brands" ManuallyRouted="false" />
         <AssociationConnector Association="FazilModel.FK_Products_Categories" ManuallyRouted="false" />
         <AssociationConnector Association="FazilModel.FK_Products_Dropoffs" ManuallyRouted="false" />
         <AssociationConnector Association="FazilModel.FK_Products_Suppliers" ManuallyRouted="false" />
-        <AssociationConnector Association="FazilModel.FK_SaleItems_Products" ManuallyRouted="false" />
         <AssociationConnector Association="FazilModel.FK_SaleInvoice_SaleTypes" ManuallyRouted="false" />
-        <AssociationConnector Association="FazilModel.FK_SaleItems_SaleInvoice" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FazilModel.SaleItem" Width="1.5" PointX="5.25" PointY="7.375" />
+        <AssociationConnector Association="FazilModel.FK_SaleItems_Products" />
+        <AssociationConnector Association="FazilModel.FK_SaleItems_SaleInvoice" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

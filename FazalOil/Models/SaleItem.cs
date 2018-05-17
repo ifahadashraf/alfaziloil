@@ -20,6 +20,7 @@ namespace FazalOil.Models
         public double SellingPrice { get; set; }
         public Nullable<double> SellingLiters { get; set; }
         public Nullable<int> CansSold { get; set; }
+        public Nullable<double> Total { get; set; }
     
         public virtual Product Product { get; set; }
         public virtual SaleInvoice SaleInvoice { get; set; }

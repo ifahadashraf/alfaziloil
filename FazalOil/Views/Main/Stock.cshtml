@@ -526,7 +526,7 @@
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label>Category:</label>
-                                                <select id="selectCategory" onchange="categories()" class="form-control">
+                                                <select id="selectCategory" onchange="categories()" onfocus="this.selectedIndex = -1;" class="form-control">
                                                     <option value="1">Oil</option>
                                                     <option value="2">Filters</option>
                                                     <option>Others</option>
@@ -583,7 +583,7 @@
                                         <div class="col-lg-4">
                                             <div id="totalQuantityDiv" class="form-group" style="display: none">
                                                 <label>Total Quantity: </label>
-                                                <input type="number" min="1" id="txtQuantity" class="form-control" placeholder="Total Quantity">
+                                                <input type="number" min="1" id="txtQuantity" onkeyup="totalPrice()" class="form-control" placeholder="Total Quantity">
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
@@ -647,12 +647,15 @@
 
         var indices = [];
         var productNamesList = [];
+        var listOfAllProducts = [];
+
+        var SHOULD_LOAD = false;
 
         $(document).ready(function () {
 
             var dt = $('#dataTables-example').DataTable({
                 responsive: true,
-                "pageLength": 500
+                
             });
 
             getCategories();
@@ -668,6 +671,7 @@
                 $.each(products, function (index, item) {
                     indices.push(item.ProductID);
                     productNamesList.push(item.ProductName);
+                    listOfAllProducts.push(item);
                     dt.row.add([
                         item.ProductID,
                         item.ProductName,
@@ -680,7 +684,7 @@
                         '<div><p id="sp_id" style="display:none">' + item.SupplierID + '</p>' +
                         '<p id="df_id" style="display:none">' + item.DropoffID + '</p>' +
                         '<p id="bd_id" style="display:none">' + item.BrandID + '</p>' +
-                        '<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning" onclick="updateModal('+index+')"><span class="glyphicon glyphicon-edit"></span>&nbspEdit</button>'+
+                        '<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning" onclick="updateModal(' + item.ProductID + ')"><span class="glyphicon glyphicon-edit"></span>&nbspEdit</button>' +
                         '<p id="cat_id" style="display:none">'+item.CategoryID+'</p></div>'
                     ]).draw();
                     //$("#listOfProducts").append('<tr id="tr' + item.ProductID + '" class="odd gradeX"><td>' + item.ProductName + '</td><td>' + ((item.TotalQuantity == null) ? 'N/A' : item.TotalQuantity) + '</td><td>' + ((item.TotalLiters == null) ? 'N/A' : item.TotalLiters) + '</td><td>' + ((item.TotalCans == null) ? 'N/A' : item.TotalCans) + '</td><td class="center">' + item.DateOfPurchase + '</td><td class="center">' + item.PurchasingPrice + '</td><td class="center"><button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning" onclick="updateModal(\'tr' + item.ProductID + '\')"><span class="glyphicon glyphicon-edit"></span>&nbspEdit</button></td><td id="pid" style="display:none">' + item.ProductID + '</td><td style="display:none">' + item.CategoryID + '</td></tr>');
@@ -710,12 +714,11 @@
                 /*for each item in the array...*/
                 for (i = 0; i < arr.length; i++) {
                     /*check if the item starts with the same letters as the text field value:*/
-                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    if (arr[i].toLowerCase().indexOf(val.toLowerCase()) > -1) {
                         /*create a DIV element for each matching element:*/
                         b = document.createElement("DIV");
                         /*make the matching letters bold:*/
-                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                        b.innerHTML += arr[i].substr(val.length);
+                        b.innerHTML += arr[i];
                         /*insert a input field that will hold the current array item's value:*/
                         b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
                         /*execute a function when someone clicks on the item value (DIV element):*/
@@ -796,62 +799,73 @@
 
             engineOilFields("none");
             filterFields("none");
+            $('#selectCategory option[value=' + -1 + ']').prop("selected", true);
+            $('#btnSubmit').text('Save');
 
-            getProductName(function (arr) {
-                var products = $.parseJSON(arr);
-                dt.clear();
-                $.each(products, function (index, item) {
-                    indices.push(item.ProductID);
-                    productNamesList.push(item.ProductName);
-                    dt.row.add([
-                        item.ProductID,
-                        item.ProductName,
-                        item.CanSize,
-                        item.TotalCans,
-                        Number(item.TotalLiters).toFixed(2),
-                        item.TotalQuantity,
-                        Number(item.PurchasingPrice).toFixed(2),
-                        item.DateOfPurchase,
-                        '<div><p id="sp_id" style="display:none">' + item.SupplierID + '</p>' +
-                        '<p id="df_id" style="display:none">' + item.DropoffID + '</p>' +
-                        '<p id="bd_id" style="display:none">' + item.BrandID + '</p>' +
-                        '<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning" onclick="updateModal(' + index + ')"><span class="glyphicon glyphicon-edit"></span>&nbspEdit</button>' +
-                        '<p id="cat_id" style="display:none">' + item.CategoryID + '</p></div>'
-                    ]).draw();
-                    //$("#listOfProducts").append('<tr id="tr' + item.ProductID + '" class="odd gradeX"><td>' + item.ProductName + '</td><td>' + ((item.TotalQuantity == null) ? 'N/A' : item.TotalQuantity) + '</td><td>' + ((item.TotalLiters == null) ? 'N/A' : item.TotalLiters) + '</td><td>' + ((item.TotalCans == null) ? 'N/A' : item.TotalCans) + '</td><td class="center">' + item.DateOfPurchase + '</td><td class="center">' + item.PurchasingPrice + '</td><td class="center"><button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning" onclick="updateModal(\'tr' + item.ProductID + '\')"><span class="glyphicon glyphicon-edit"></span>&nbspEdit</button></td><td id="pid" style="display:none">' + item.ProductID + '</td><td style="display:none">' + item.CategoryID + '</td></tr>');
+            if (SHOULD_LOAD)
+            {
+                indices = [];
+                productNamesList = [];
+                listOfAllProducts = [];
+
+                getProductName(function (arr) {
+                    var products = $.parseJSON(arr);
+                    dt.clear();
+                    $.each(products, function (index, item) {
+                        indices.push(item.ProductID);
+                        productNamesList.push(item.ProductName);
+                        listOfAllProducts.push(item);
+                        dt.row.add([
+                            item.ProductID,
+                            item.ProductName,
+                            item.CanSize,
+                            item.TotalCans,
+                            Number(item.TotalLiters).toFixed(2),
+                            item.TotalQuantity,
+                            Number(item.PurchasingPrice).toFixed(2),
+                            item.DateOfPurchase,
+                            '<p id="sp_id" style="display:none">' + item.SupplierID + '</p>' +
+                            '<p id="df_id" style="display:none">' + item.DropoffID + '</p>' +
+                            '<p id="bd_id" style="display:none">' + item.BrandID + '</p>' +
+                            '<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning" onclick="updateModal(' + item.ProductID + ')"><span class="glyphicon glyphicon-edit"></span>&nbspEdit</button>' +
+                            '<p id="cat_id" style="display:none">' + item.CategoryID + '</p>'
+                        ]).draw();
+                        //$("#listOfProducts").append('<tr id="tr' + item.ProductID + '" class="odd gradeX"><td>' + item.ProductName + '</td><td>' + ((item.TotalQuantity == null) ? 'N/A' : item.TotalQuantity) + '</td><td>' + ((item.TotalLiters == null) ? 'N/A' : item.TotalLiters) + '</td><td>' + ((item.TotalCans == null) ? 'N/A' : item.TotalCans) + '</td><td class="center">' + item.DateOfPurchase + '</td><td class="center">' + item.PurchasingPrice + '</td><td class="center"><button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning" onclick="updateModal(\'tr' + item.ProductID + '\')"><span class="glyphicon glyphicon-edit"></span>&nbspEdit</button></td><td id="pid" style="display:none">' + item.ProductID + '</td><td style="display:none">' + item.CategoryID + '</td></tr>');
+                    });
+                    autocomplete(document.getElementById("txtProductName"), productNamesList);
                 });
-                autocomplete(document.getElementById("txtProductName"), productNamesList);
-            });
-        })
+
+                SHOULD_LOAD = false;
+            }
+
+            
+        });
 
         function updateModal(pid) {
 
-            pid += 1;
-
             $("#btnSubmit").text('Update');
 
-            var row = document.getElementById("dataTables-example").rows[pid];
+            var row = null;
 
-            $("#modal_pid").html(row.cells[0].innerHTML);
-            $("#txtProductName").val(row.cells[1].innerHTML);
-            $("#txtCanSize").val(row.cells[2].innerHTML);
-            $("#txtNoOfCans").val(row.cells[3].innerHTML);
-            $("#txtNoOfLitres").val(row.cells[4].innerHTML);
-            $("#txtQuantity").val(row.cells[5].innerHTML);
-            $('#selectBrand option[value="' + 1 + '"]').attr("selected", "selected");
-            $("#txtPrice").val(row.cells[6].innerHTML);
-            $("#datePurchase").val(row.cells[7].innerHTML);
+            $.each(listOfAllProducts, function (index, item) {
+                if (item.ProductID == pid) {
+                    row = item;
+                }
+            });
 
-            var insideHTML = row.cells[8].innerHTML;
-            var catid = $(insideHTML).find("#cat_id").html();
-            var spid = $(insideHTML).find("#sp_id").html();
-            var dfid = $(insideHTML).find("#df_id").html();
-            var bdid = $(insideHTML).find("#bd_id").html();
+            $("#modal_pid").html(row.ProductID);
+            $("#txtProductName").val(row.ProductName);
+            $("#txtCanSize").val(row.CanSize);
+            $("#txtNoOfCans").val(row.TotalCans);
+            $("#txtNoOfLitres").val(row.TotalLiters);
+            $("#txtQuantity").val(row.TotalQuantity);
+            $("#txtPrice").val(row.PurchasingPrice);
+            $("#datePurchase").val(row.DateOfPurchase);
 
-            $('#selectLocation option[value=' + dfid + ']').prop("selected", true);
-            $('#selectSupplier option[value=' + spid + ']').prop("selected", true);
-            $('#selectCategory option[value=' + catid + ']').prop("selected", true);
-            $('#selectBrand option[value=' + bdid + ']').prop("selected", true);
+            $('#selectLocation option[value=' + row.DropoffID + ']').prop("selected", true);
+            $('#selectSupplier option[value=' + row.SupplierID + ']').prop("selected", true);
+            $('#selectCategory option[value=' + row.CategoryID + ']').prop("selected", true);
+            $('#selectBrand option[value=' + row.BrandID + ']').prop("selected", true);
 
             categories();
             totalPrice();

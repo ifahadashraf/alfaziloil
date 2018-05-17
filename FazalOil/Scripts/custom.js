@@ -2,11 +2,14 @@
 
 var BASE_URL = "../../";
 var ADD_PRODUCT = "Data/AddProduct";
+var UPDATE_PRODUCT = "Data/UpdateProduct";
 var GET_PRODUCTS = "Data/GetProducts";
 var GET_BRANDS = "Data/GetBrands";
 var GET_CATEGORIES = "Data/GetCategories";
 var GET_SUPPLIER = "Data/GetSuppliers";
 var GET_DROPOFF = "Data/GetDropoffs";
+var ADD_INVOICE = "Data/AddInvoice";
+var GET_AVAIL_STOCK = "Data/GetAvailableStock";
 
 //***********************END GLOBAL VARIABLES***********************//
 
@@ -92,33 +95,75 @@ function saveProduct() {
     else {
         $("#alertdiv").html('<div class="alert alert-warning">Processing your request...</div>');
 
-        $.ajax({
-            url: BASE_URL + ADD_PRODUCT,
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(json),
-            success: function (data) {
-                $("#alertdiv").html('<div class="alert alert-success">Successfully added</div>');
-                $('input').val('');
-                $('option').attr('selected', false);
-                setTimeout(
-                  function () {
-                      //do something special
-                      $("#alertdiv").html('');
-                  }, 3000);
+        if ($("#btnSubmit").text().toLowerCase() == "save")
+        {
+            $.ajax({
+                url: BASE_URL + ADD_PRODUCT,
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $("#alertdiv").html('<div class="alert alert-success">Successfully added</div>');
+                    $('input').val('');
+                    $('option').attr('selected', false);
+                    SHOULD_LOAD = true;
+                    setTimeout(
+                      function () {
+                          //do something special
+                          $("#alertdiv").html('');
+                      }, 2000);
 
 
-            },
-            error: function (err) {
+                },
+                error: function (err) {
 
-            }
-        });
+                }
+            });
+        }
+        else
+        {
+            $.ajax({
+                url: BASE_URL + UPDATE_PRODUCT,
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $("#alertdiv").html('<div class="alert alert-success">Successfully added</div>');
+                    $('input').val('');
+                    $('option').attr('selected', false);
+                    SHOULD_LOAD = true;
+                    setTimeout(
+                      function () {
+                          //do something special
+                          $("#alertdiv").html('');
+                      }, 2000);
+                },
+                error: function (err) {
+
+                }
+            });
+        }
+
+        
     }
 }
 
 function getProductName(callback) {
     $.ajax({
         url: BASE_URL + GET_PRODUCTS,
+        type: "GET",
+        success: function (data) {
+            callback(data);
+        },
+        error: function (err) {
+
+        }
+    });
+}
+
+function getAvailStock(callback) {
+    $.ajax({
+        url: BASE_URL + GET_AVAIL_STOCK,
         type: "GET",
         success: function (data) {
             callback(data);
@@ -213,6 +258,21 @@ function getDropoffs() {
     });
 }
 
+function addInvoice(model,callback) {
+    $.ajax({
+        url: BASE_URL + ADD_INVOICE,
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(model),
+        success: function (data) {
+            callback(data);
+        },
+        error: function (err) {
+            callback("-1");
+        }
+    });
+}
+
 //***********************END API FUNCTIONS**************************//
 
 function supllier() {
@@ -253,7 +313,7 @@ function categories() {
         filterFields("none");
         engineOilFields("inline-block");
     }
-    else if(category.toLowerCase() == "filters")
+    else if (category.toLowerCase() == "filters" || category.toLowerCase() == "others")
     {
         rawOilField("none",'0');
         engineOilFields("none");
@@ -264,12 +324,6 @@ function categories() {
         engineOilFields("none");
         filterFields("none");
         rawOilField("inline-block",'1');
-    }
-    else {
-        
-        engineOilFields("none");
-        rawOilField("none", '1');
-        filterFields("inline-block");
     }
 }
 

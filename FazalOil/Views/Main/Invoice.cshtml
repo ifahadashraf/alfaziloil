@@ -113,7 +113,9 @@
         .gone {
             display: none;
         }
+        
     </style>
+   
 
 </head>
 
@@ -399,8 +401,6 @@
             </div>
 
             <div class="row">
-
-                <div class="row">
                     <div class="col-lg-3">
                         <div class="form-group">
                             <label>Sale Person:</label>
@@ -430,200 +430,228 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="form-group">
-                        <div class="col-lg-8">
-                            <div class="row">
-                                <div class="form-group input-group">
-                                    <span class="input-group-addon"><b>Search Product: </b></span>
-                                    <input id="txtProductName" type="text" class="form-control" placeholder="Product Name">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="panel-body" style="overflow-y: scroll; height:400px;">
-                                    <div class="table-responsive table-bordered">
-                                            <table id="cartItems" class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Sr#</th>
-                                                        <th class="col-md-3">Product Name</th>
-                                                        <th>Litres</th>
-                                                        <th>Cans</th>
-                                                        <th>Quantity</th>
-                                                        <th>Rate</th>
-                                                        <th>Total</th>
-                                                        <th>Delete</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="listOfItems">
-                                                    
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <label>Payment Method:</label>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="radioPayment" id="radioPayment" value="radioPaymentCash" checked>Cash
-                                            </label>
-                                        </div>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="radioPayment" id="radioPayment" value="radioPaymentCredit">Credit
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Comments:</label>
-                                        <textarea class="form-control" rows="4"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2">
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <label class="checkbox-inline">
-                                                <input type="checkbox" checked>Print Invoice
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <label>No. of Copies:</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
+            <div class="row">
+                <p>&nbsp</p>
+            </div>
 
+            <div class="row">
+
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="form-group input-group" style="padding-left:12px;">
+                            <span class="input-group-addon"><b>Search Product: </b></span>
+                            <input id="txtProductName" type="text" class="form-control" placeholder="Product Name">
+                        </div>
+
+                        <div class="panel-body" style="overflow-y: scroll; height:380px;">
+                            <div class="table-responsive table-bordered">
+                                <table id="cartItems" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr#</th>
+                                            <th class="col-sm-3">Product Name</th>
+                                            <th class="col-lg-1">Litres</th>
+                                            <th class="col-lg-1">Cans</th>
+                                            <th class="col-lg-1">Qty</th>
+                                            <th>TypeOfRate</th>
+                                            <th>Rate</th>
+                                            <th>Total</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="listOfItems"></tbody>
+                                </table>
                             </div>
                         </div>
 
-                        <div class="col-lg-1"></div>
-
-                        <div class="col-lg-2">
-                            <div class="row">
-                                <div class="form-group">
-                                    <label>Net Total: </label>
-                                    <input type="text" id="txtNetTotal" class="form-control input-lg" value="0" disabled>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group">
-                                    <label>Invoice </label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group">
-                                    <label>Cash: </label>
-                                    <input type="number" id="txtCash" class="form-control input-lg" onchange="calBalance(this)">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group">
-                                    <label>Balance: </label>
-                                    <input type="text" id="txtBalance" class="form-control input-default" disabled>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group">
-                                    <button type="button" class="btn btn-outline btn-success">Generate Invoice</button>
-                                </div>
-                            </div>
+                        <div class="row">
+                            <p>&nbsp</p>
                         </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div id="radioGroup" class="form-group">
+                                    <label>Payment Method:</label>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="radioPayment" id="radioPayment" value="Cash" checked>Cash
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="radioPayment" id="radioPayment" value="Credit">Credit
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Comments:</label>
+                                    <textarea id="txtComments" class="form-control" rows="4"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                @*<div class="row">
+                                    <div class="form-group">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" checked>Print Invoice
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label>No. of Copies:</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>*@
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
 
-                <!-- Modal -->
-                <div class="modal fade" id="myModal" role="dialog">
-                    <div class="modal-dialog">
+                <div class="col-sm-1"></div>
 
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Vehicle Details</h4>
-                            </div>
-                            <div class="modal-body">
-
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label>Vehicle Number: </label>
-                                            <input type="text" id="txtVehicleNumber" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label>Customer Name: </label>
-                                            <input type="text" id="txtDriverName" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label>Worker Name:</label>
-                                            <select id="selectWorkerName" class="form-control">
-                                                <option>Bilal</option>
-                                                <option>Awais</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label>Mobil Oil: </label>
-                                            <input type="text" id="txtMobilOil" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label>Oil Filter: </label>
-                                            <input type="text" id="txtOilFilter" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label>Air Filter: </label>
-                                            <input type="text" id="txtAirFilter" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label>Current Reading: </label>
-                                            <input type="text" id="txtCurrentReading" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label>Expected km: </label>
-                                            <input type="text" id="txtExpectedkm" onchange="nextChange()" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label>Next Change: </label>
-                                            <input type="text" id="txtNextChange" class="form-control" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default">Save Details</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
+                <div class="col-sm-2">
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Net Total: </label>
+                            <input type="text" id="txtNetTotal" class="form-control input-lg" value="0" disabled>
                         </div>
-
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Invoice </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Cash: </label>
+                            <input type="number" id="txtCash" class="form-control input-lg" onchange="calBalance(this)" value="0">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Balance: </label>
+                            <input type="text" id="txtBalance" class="form-control input-default" value="0" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-outline btn-success" onclick="generateInvoice()">Generate Invoice</button>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Vehicle Details</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>Vehicle Number: </label>
+                                        <input type="text" id="txtVehicleNumber" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>Customer Name: </label>
+                                        <input type="text" id="txtDriverName" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>Worker Name:</label>
+                                        <select id="selectWorkerName" class="form-control">
+                                            <option>Bilal</option>
+                                            <option>Awais</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>Mobil Oil: </label>
+                                        <input type="text" id="txtMobilOil" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>Oil Filter: </label>
+                                        <input type="text" id="txtOilFilter" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>Air Filter: </label>
+                                        <input type="text" id="txtAirFilter" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>Current Reading: </label>
+                                        <input type="text" id="txtCurrentReading" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>Expected km: </label>
+                                        <input type="text" id="txtExpectedkm" onchange="nextChange()" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>Next Change: </label>
+                                        <input type="text" id="txtNextChange" class="form-control" disabled>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default">Save Details</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div id="doneModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h3 class="modal-title">Thankyou for shopping here</h3>
+                        </div>
+                        <div class="modal-body">
+                            <p>Click close to continue</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearInvoice()">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="toPrint"></div>
 
         </div>
         <!-- /#page-wrapper -->
@@ -648,6 +676,7 @@
     <script src="~/dist/js/sb-admin-2.js"></script>
 
     <script src="~/Scripts/custom.js"></script>
+    <script src="~/Scripts/printThis.js"></script>
 
     <script>
 
@@ -655,19 +684,18 @@
         var productNamesList = [];
         var allProducts = [];
         var arrOfTotals = [];
+        var arrOfItems = [];
 
         $(document).ready(function () {
             $(".loader").removeClass("gone");
 
-            getProductName(function (arr) {
+            getAvailStock(function (arr) {
                 $(".loader").addClass("gone");
                 var products = $.parseJSON(arr);
                 $.each(products, function (index, item) {
-
                     indices.push(item.ProductID);
                     productNamesList.push(item.ProductName);
                     allProducts.push(item);
-
                 });
 
                 autocomplete(document.getElementById("txtProductName"), productNamesList);
@@ -694,12 +722,11 @@
                 /*for each item in the array...*/
                 for (i = 0; i < arr.length; i++) {
                     /*check if the item starts with the same letters as the text field value:*/
-                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    if (arr[i].toLowerCase().indexOf(val.toLowerCase()) > -1) {
                         /*create a DIV element for each matching element:*/
                         b = document.createElement("DIV");
                         /*make the matching letters bold:*/
-                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                        b.innerHTML += arr[i].substr(val.length);
+                        b.innerHTML += arr[i];
                         /*insert a input field that will hold the current array item's value:*/
                         b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
                         /*execute a function when someone clicks on the item value (DIV element):*/
@@ -714,35 +741,61 @@
                             var canField = '';
                             var rateField = '';
                             var quantityField = '';
+                            var selectField = '';
 
-                            if (obj.CategoryID == 1 || obj.CategoryID == '1')
+                            if (obj.CategoryID == 1 || obj.CategoryID == '1') //Engine oil
                             {
                                 quantityField = 'disabled';
                             }
-                            else if (obj.CategoryID == 2 || obj.CategoryID == '2')
+                            else if (obj.CategoryID == 2 || obj.CategoryID == '2')  //Raw oil
                             {
                                 quantityField = 'disabled';
                                 canField = 'disabled';
+                                selectField = 'disabled';
                             }
                             else
                             {
                                 litreField = 'disabled';
                                 canField = 'disabled';
+                                selectField = 'disabled';
                             }
 
-                            var idOfRow = Date.now();
+                            var idOfRow = obj.ProductID;
+                            
+                            idx = 0
+                            label = true;
+                            for (idx = 0; idx < arrOfItems.length; idx++) {
+                                if (arrOfItems[idx].pid == obj.ProductID) {
+                                    label = false;
+                                }
+                            }
 
-                            $('#listOfItems').append(
-                                '<tr id="cart' + idOfRow + '">' +
-                                '<td>' + obj.ProductID + '</td>' +
+                            if (label) {
+                                $('#listOfItems').append(
+                                '<tr id="' + idOfRow + '">' +
+                                '<td>' + $('#cartItems tr').length + '</td>' +
                                 '<td>' + obj.ProductName + '</td>' +
-                                '<td><input id="txtNoOfLitres' + idOfRow + '" class="form-control" ' + litreField + '></td>' +
-                                '<td><input id="txtNoOfCans' + idOfRow + '" class="form-control" ' + canField + '></td>' +
-                                '<td><input id="txtQty' + idOfRow + '" class="form-control" ' + quantityField + '></td>' +
+                                '<td><input id="txtNoOfLitres' + idOfRow + '" class="form-control" ' + litreField + ' onkeyup="calTotalPrice(' + idOfRow + ')" onfocusout="check(txtNoOfLitres' + idOfRow + ')" max="' + obj.TotalLiters + '"></td>' +
+                                '<td><input id="txtNoOfCans' + idOfRow + '" class="form-control" ' + canField + ' onkeyup="calTotalPrice(' + idOfRow + ')" onfocusout="check(txtNoOfCans' + idOfRow + ')" max="' + obj.TotalCans + '"></td>' +
+                                '<td><input id="txtQty' + idOfRow + '" class="form-control" ' + quantityField + ' onkeyup="calTotalPrice(' + idOfRow + ')" onfocusout="check(txtQty' + idOfRow + ')" max="' + obj.TotalQuantity + '"></td>' +
+                                '<td><select id="txtRateType' + idOfRow + '" class="form-control" onchange="calTotalPrice(' + idOfRow + ')" ' + selectField + '><option value="cans">Cans</option><option value="Litres">Litres</option></select>' +
                                 '<td><input id="txtPrice' + idOfRow + '" class="form-control" onkeyup="calTotalPrice(' + idOfRow + ')" ' + rateField + ' onchange="calNetTotal(' + idOfRow + ')"></td>' +
-                                '<td><input id="row' + idOfRow + '" class="form-control" disabled></td>' +
-                                '<td><button type="button" class="btn btn-link" onclick="delCart(' + idOfRow + ')">Delete</button></td>' +
-                                '</tr>')
+                                '<td><input id="row' + idOfRow + '" class="form-control" onchange="calNetTotal(' + idOfRow + ')" disabled></td>' +
+                                '<td><button type="button" class="btn btn-link" onclick="delCart(' + idOfRow + ')"><span class="glyphicon glyphicon-remove"></span></button></td>' +
+                                '</tr>');
+
+                                var item = {
+                                    pid: obj.ProductID,
+                                    name: null,
+                                    litres: null,
+                                    cans: null,
+                                    quantity: null,
+                                    rate: null,
+                                    subTotal: null
+                                }
+
+                                arrOfItems.push(item);
+                            }
 
                             /*close the list of autocompleted values,
                             (or any other open lists of autocompleted values:*/
@@ -817,6 +870,7 @@
             var id2 = 'txtNoOfCans' + id;
             var id3 = 'txtNoOfLitres' + id;
             var id4 = 'txtQty' + id;
+            var id5 = '#txtRateType' + id;
 
             var canPrice = document.getElementById(id1).value;
             var numberOfCans = document.getElementById(id2).value;
@@ -833,20 +887,23 @@
                 }
             }
             else { //engine oil
-                if (numberOfCans == 0) {
+                var val = $(id5).val();
+                if (val.toLowerCase() == "litres") {
                     $('#row' + id).val((totalLiters * canPrice));
                 }
                 else {
                     $('#row' + id).val((numberOfCans * canPrice));
                 }
             }
+
+            var evt = new CustomEvent('change');
+            document.getElementById('row' + id).dispatchEvent(evt);
         }
 
         function calNetTotal(id) {
             $.each(arrOfTotals, function (index, item) {
                 if (item.Id == id) {
                     arrOfTotals.splice(index, 1);
-                    return false;
                 }
             });
 
@@ -877,16 +934,191 @@
 
             minusNetTotal(id);
 
-            var id1 = '#cart' + id;
+            var id1 = '#' + id;
             $(id1).remove();
+
+            idx = 0;
+            
+            for (idx = 0; idx < arrOfItems.length; idx++)
+            {
+                if (arrOfItems[idx].pid == id)
+                {
+                    arrOfItems.splice(idx, 1);
+                }
+            }
         }
 
-        function calBalance(ctx) {
+        function calBalance(ctx)
+        {
             var netTotal = parseInt($('#txtNetTotal').val());
             var cash = parseInt($(ctx).val());
 
             $('#txtBalance').val(cash - netTotal);
         }
+
+        function getFormattedDate() {
+            var date = new Date();
+            var str = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+
+            return str;
+        }
+
+        function generateInvoice() {
+            if (parseInt($('#txtCash').val()) != 0)
+            {
+                continueInvoice();
+            }
+            else {
+                alert("Kindly enter the amount for cash");
+            }
+        }
+
+        function continueInvoice() {
+
+            var tableRows = document.getElementById("cartItems").rows;
+
+            var i = 0;
+            var y = 0;
+
+            for (i = 1; i < tableRows.length; i++) {
+                for (y = 0; y < arrOfItems.length; y++)
+                {
+                    var f1 = parseInt(tableRows[i].id);
+                    var f2 = arrOfItems[y].pid;
+                    if (f1 == f2) {
+                        arrOfItems[y].name = tableRows[i].cells[1].innerHTML;
+                        arrOfItems[y].litres = parseFloat(tableRows[i].cells[2].firstChild.value);
+                        arrOfItems[y].cans = parseInt(tableRows[i].cells[3].firstChild.value);
+                        arrOfItems[y].quantity = parseInt(tableRows[i].cells[4].firstChild.value);
+                        arrOfItems[y].rate = parseInt(tableRows[i].cells[6].firstChild.value);
+                        arrOfItems[y].subTotal = parseInt(tableRows[i].cells[7].firstChild.value);
+                    }
+                }
+            }
+
+            var model = {
+                date: getFormattedDate(),
+                items: arrOfItems,
+                netTotal: parseInt($("#txtNetTotal").val()),
+                balance: parseInt($("#txtBalance").val()),
+                typeOfInvoice: $('#radioGroup input[type=radio]:checked').val(),
+                comments: $('#txtComments').val()
+            }
+            
+            addInvoice(model, function (resp) {
+                if (resp != "-1")
+                {
+                    printBill(model, resp, function ()
+                    {
+                        arrOfTotals = [];
+                        arrOfItems = [];
+                        $('#listOfItems').html('');
+                        $('#txtNetTotal').val(0);
+                        $('#txtBalance').val(0);
+                        $('#txtCash').val(0);
+                        $('#txtComments').val('');
+                        $('#doneModal').modal('show');
+                    });
+                }
+                else {
+                    alert(resp);
+                }
+            });
+        }
+
+        function printBill(model,id,callback) {
+            var invoiceHtml = '<div style="width:3in"><table width="100%"><tr><td align="left"><img src="../../Images/logo.jpg"  width="45px"></td><td  align="left"><br><h4> Al Fazil Makhdoom<br>Hussain Oil Agency</h4></td></tr><tr><td colspan="2" style="border-top: 1px solid black;"></td></tr><tr><td align="left">Sale Receipt</td><td align="right">Invoice # ' + id + '</td></tr></table>' +
+                                '<table width="100%">' +
+	                                '<tr>' +
+	                                    '<td align="center">Date: ' + model.date + '</td>' +
+                                    '</tr>' +
+                                    '<tr  style="text-align:center">' +
+                                        '<td>Payment Mode: ' + model.typeOfInvoice + '</td>' +
+                                    '</tr>' +
+                                '</table>' +
+                        '<table width="100%">' +
+                        '<tr><td colspan="5" style="border-top: 1px solid black;"></td></tr>' +
+                            '<tr style="font-size:13px;">' +
+                              '<th>Sr.</th>'+
+                              '<th>Item</th>' +
+                              '<th style="text-align:right">Rate</th>' +
+                              '<th style="text-align:right">Qty</th>' +
+                              '<th style="text-align:right">Amount</th>' +
+                            '</tr>' +
+                        '<tr><td colspan="5" style="border-top: 1px solid black;"></td></tr>';
+
+            $.each(arrOfItems, function (index, item) {
+                invoiceHtml += '<tr style="font-size:13px;"><td>'+(index+1)+'</td><td>' + item.name + '</td><td align="right">' + item.rate + '</td>';
+                if (isNaN(item.quantity)) {
+                    invoiceHtml += '<td align="right">' + item.litres + 'L</td>';
+                }
+                else {
+                    invoiceHtml += '<td align="right">' + item.quantity + '</td>';
+                }
+                invoiceHtml += '<td align="right">' + item.subTotal + '</td></tr>';
+            });
+            invoiceHtml += '<tr><td colspan="5"  style="border-top: 1px solid black;"></td></tr>';
+            invoiceHtml += '<tr><td colspan="4" align="right"><strong>Net Total:</strong></td>' +
+                            '<td  align="right">' + model.netTotal + '</td></tr>' +
+
+                           '<tr><td colspan="4" align="right"><strong>Cash:</strong></td>' +
+                            '<td  align="right">' + $('#txtCash').val() + '</td></tr>' +
+
+                           '<tr><td colspan="4" align="right"><strong>Balance:</strong></td>' +
+                            '<td  align="right">' + model.balance + '</td></tr>' +
+                           '<tr><td colspan="5"  style="border-top: 1px solid black;"></td></tr>' +
+                           '<tr><td colspan="5"  style="border-top: 1px solid black;"></td></tr>' +
+                           '</table>';
+
+            invoiceHtml += '<br><p style="text-align:center"><img src="../../Images/brandlogo.jpg"  width="290" height="50"/></p>' +
+                '<div style="width:100%; text-align:center;">' +
+                    '<p>' +
+                      'Thank you for visiting Al Fazil Oil<br>' +
+                      'We deal in all kinds of Auto Mobil Oils.<br>'+
+                        'Ph: 042-35390205,  0300-4448044<br>' +
+                      'Railway Road Near Taha Masjid Raiwind<br>' +
+                    '</p>' +
+                '</div>' +
+              '</div>';
+
+
+            $('#toPrint').html(invoiceHtml);
+            $('#toPrint').printThis();
+
+            callback();
+        }
+
+        function check(id) {
+            if (parseFloat($(id).val()) > parseFloat($(id).attr('max'))) {
+                alert("Value for this field cannot be greater than " + $(id).attr('max'));
+                $(id).val('');
+            }
+        }
+
+        function clearInvoice()
+        {
+            $('#toPrint').html('');
+        }
+
+        $('#doneModal').on('hidden.bs.modal', function () {
+            indices = [];
+            productNamesList = [];
+
+            $('#toPrint').html('');
+
+            getAvailStock(function (arr) {
+                $(".loader").addClass("gone");
+                var products = $.parseJSON(arr);
+                $.each(products, function (index, item) {
+                    indices.push(item.ProductID);
+                    productNamesList.push(item.ProductName);
+                    allProducts.push(item);
+                });
+
+                autocomplete(document.getElementById("txtProductName"), productNamesList);
+            });
+        });
+
     </script>
 
 
