@@ -27,6 +27,9 @@ namespace FazalOil.Models
         [JsonProperty("items")]
         public List<Items> items { get; set; }
 
+        [JsonProperty("customer")]
+        public CustomerDetail customer;
+
     }
 
     public class Items

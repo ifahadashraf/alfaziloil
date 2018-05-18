@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Al Fazal Oil Agency</title>
+    <title>Al-Fazil Oil Agency</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -132,7 +132,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/Main/Index">Al Fazal Oil Agency</a>
+                <a class="navbar-brand" href="/Main/Index">Al-Fazil Oil Agency</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -413,7 +413,7 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label>Customer Name:</label>
-                            <input id="txtCustomerName" class="form-control" placeholder="Customer Name">
+                            <input id="txtCustomerName1" class="form-control" placeholder="Customer Name">
                         </div>
                     </div>
                     <div class="col-lg-2">
@@ -425,7 +425,7 @@
                     <div class="col-lg-2">
                         <div class="form-group">
                             <label>Search:</label>
-                            <button type="button" class="btn btn-default">Search Invoices</button>
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#invoiceModal">Search Invoices</button>
                         </div>
                     </div>
                 </div>
@@ -440,7 +440,7 @@
                     <div class="row">
                         <div class="form-group input-group" style="padding-left:12px;">
                             <span class="input-group-addon"><b>Search Product: </b></span>
-                            <input id="txtProductName" type="text" class="form-control" placeholder="Product Name">
+                            <input id="txtProductName" class="form-control" placeholder="Product Name">
                         </div>
 
                         <div class="panel-body" style="overflow-y: scroll; height:380px;">
@@ -561,69 +561,108 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Vehicle Number: </label>
-                                        <input type="text" id="txtVehicleNumber" class="form-control">
+                                        <input id="txtVehicleNumber" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Customer Name: </label>
-                                        <input type="text" id="txtDriverName" class="form-control">
+                                        <input id="txtCustomerName" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label>Worker Name:</label>
-                                        <select id="selectWorkerName" class="form-control">
-                                            <option>Bilal</option>
-                                            <option>Awais</option>
-                                        </select>
+                                        <label>Employee Name:</label>
+                                        <input id="txtEmpName" class="form-control">
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label>Mobil Oil: </label>
-                                        <input type="text" id="txtMobilOil" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label>Oil Filter: </label>
-                                        <input type="text" id="txtOilFilter" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label>Air Filter: </label>
-                                        <input type="text" id="txtAirFilter" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Current Reading: </label>
-                                        <input type="text" id="txtCurrentReading" class="form-control">
+                                        <input id="txtCurrentReading" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Expected km: </label>
-                                        <input type="text" id="txtExpectedkm" onchange="nextChange()" class="form-control">
+                                        <input id="txtExpectedkm" onchange="nextChange()" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Next Change: </label>
-                                        <input type="text" id="txtNextChange" class="form-control" disabled>
+                                        <input id="txtNextChange" class="form-control" disabled>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default">Save Details</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Save Details</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div id="invoiceModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h3 class="modal-title">Invoice</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div id="alertdiv" class="row">
+
+                            </div>
+                            <div class="row">
+                                @*<div class="col-lg-1"></div>*@
+
+                                <div class="col-lg-12">
+                                    <div class="form-group input-group">
+                                        <input id="txtInvoiceno" placeholder="Enter invoice no." class="form-control">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" onclick="searchInvoice()">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Customer Name </label>
+                                        <input id="txtInvoiceCustomerName" class="form-control" disabled>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Total Bill </label>
+                                        <input id="txtInvoiceTotalBill" class="form-control" disabled>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Cash Paid </label>
+                                        <input id="txtInvoiceCashPaid" class="form-control" onkeyup="changeBal()">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Balance </label>
+                                        <input id="txtInvoiceBalance" class="form-control" disabled>
+                                    </div>
+                                </div>
+
+                                @*<div class="col-lg-1"></div>*@
+                                
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" onclick="updateInvoice()">Update</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -964,7 +1003,7 @@
         }
 
         function generateInvoice() {
-            if (parseInt($('#txtCash').val()) != 0)
+            if (parseInt($('#txtCash').val()) >= 0)
             {
                 continueInvoice();
             }
@@ -1002,7 +1041,23 @@
                 netTotal: parseInt($("#txtNetTotal").val()),
                 balance: parseInt($("#txtBalance").val()),
                 typeOfInvoice: $('#radioGroup input[type=radio]:checked').val(),
-                comments: $('#txtComments').val()
+                comments: $('#txtComments').val(),
+                customer: {
+                    CustomerName: $('#txtCustomerName').val(),
+                    VehicleNumber: $('#txtVehicleNumber').val(),
+                    CurrentReading: parseInt($('#txtCurrentReading').val()),
+                    ExpectedChange: parseInt($('#txtNextChange').val()),
+                    DealingEmployee: $('#txtEmpName').val()
+                }
+            }
+
+            if (model.balance < 0)
+            {
+                model.typeOfInvoice = 'Credit';
+            }
+            else
+            {
+                model.typeOfInvoice = 'Cash';
             }
             
             addInvoice(model, function (resp) {
@@ -1026,6 +1081,15 @@
             });
         }
 
+        function clearDetails() {
+            $('#txtCustomerName').val('');
+            $('#txtVehicleNumber').val('');
+            $('#txtCurrentReading').val('');
+            $('#txtNextChange').val('');
+            $('#txtEmpName').val('');
+            $('#txtExpectedkm').val('');
+        }
+
         function printBill(model,id,callback) {
             var invoiceHtml = '<div style="width:3in"><table width="100%"><tr><td align="left"><img src="../../Images/logo.jpg"  width="45px"></td><td  align="left"><br><h4> Al Fazil Makhdoom<br>Hussain Oil Agency</h4></td></tr><tr><td colspan="2" style="border-top: 1px solid black;"></td></tr><tr><td align="left">Sale Receipt</td><td align="right">Invoice # ' + id + '</td></tr></table>' +
                                 '<table width="100%">' +
@@ -1039,7 +1103,7 @@
                         '<table width="100%">' +
                         '<tr><td colspan="5" style="border-top: 1px solid black;"></td></tr>' +
                             '<tr style="font-size:13px;">' +
-                              '<th>Sr.</th>'+
+                              '<th>Sr</th>'+
                               '<th>Item</th>' +
                               '<th style="text-align:right">Rate</th>' +
                               '<th style="text-align:right">Qty</th>' +
@@ -1067,10 +1131,22 @@
                            '<tr><td colspan="4" align="right"><strong>Balance:</strong></td>' +
                             '<td  align="right">' + model.balance + '</td></tr>' +
                            '<tr><td colspan="5"  style="border-top: 1px solid black;"></td></tr>' +
-                           '<tr><td colspan="5"  style="border-top: 1px solid black;"></td></tr>' +
                            '</table>';
+            invoiceHtml += '<table width="100%">' +
+                              '<tr>' +
+		                            '<td align="left">Vehicle#: ' + $('#txtVehicleNumber').val() + '</td>' +
+                                '<td align="right">Customer: ' + $('#txtCustomerName').val() + '</td>' +
+                              '</tr>' +
+                              '<tr>' +
+  	                            '<td align="left">Reading: ' + $('#txtCurrentReading').val() + ' KM</td>' +
+                                '<td align="right">Next Change: ' + $('#txtNextChange').val() + ' KM</td>' +
+                              '</tr>' +
+	                            '<tr>' +
+  	                            '<td colspan="2" style="border-top: 1px solid black;"></td>' +
+                              '</tr>' +
+                            '</table>';
 
-            invoiceHtml += '<br><p style="text-align:center"><img src="../../Images/brandlogo.jpg"  width="290" height="50"/></p>' +
+            invoiceHtml += '<p style="text-align:center"><img src="../../Images/brandlogo.jpg"  width="290" height="50"/></p>' +
                 '<div style="width:100%; text-align:center;">' +
                     '<p>' +
                       'Thank you for visiting Al Fazil Oil<br>' +
@@ -1103,7 +1179,7 @@
         $('#doneModal').on('hidden.bs.modal', function () {
             indices = [];
             productNamesList = [];
-
+            clearDetails();
             $('#toPrint').html('');
 
             getAvailStock(function (arr) {
@@ -1118,6 +1194,55 @@
                 autocomplete(document.getElementById("txtProductName"), productNamesList);
             });
         });
+
+        function searchInvoice() {
+            var query = $('#txtInvoiceno').val();
+            getInvoices(query, function (data) {
+                var data = JSON.parse(data);
+                if(data == "-1")
+                {
+                    $('#alertdiv').html('<div class="alert alert-danger">No such invoice no. found</div>');
+                }
+                else if (data.length == 0) {
+                    $('#alertdiv').html('<div class="alert alert-danger">No such invoice no. found</div>');
+                }
+                else
+                {
+                    $('#txtInvoiceCustomerName').val(data[0].CustomerDetail.CustomerName);
+                    $('#txtInvoiceTotalBill').val(data[0].TotalAmount);
+                    $('#txtInvoiceCashPaid').val((data[0].TotalAmount - data[0].Balance));
+                    $('#txtInvoiceBalance').val(data[0].Balance);
+                }
+            });
+        }
+
+        function changeBal() {
+            var cash = parseInt($('#txtInvoiceCashPaid').val());
+            var bil = parseInt($('#txtInvoiceTotalBill').val());
+
+            $('#txtInvoiceBalance').val((bil + cash));
+        }
+
+        function updateInvoice() {
+            var id = $('#txtInvoiceno').val();
+            var bal = parseInt($('#txtInvoiceBalance').val());
+            updateInvoiceApi(id, bal, function (data) {
+                if (data == "-1") {
+                    $('#alertdiv').html('<div class="alert alert-danger">No such invoice no. found</div>');
+                }
+                else {
+                    $('#alertdiv').html('<div class="alert alert-success">Updated successfully</div>');
+                    setTimeout(
+                      function () {
+                          //do something special
+                          $('#txtInvoiceCustomerName').val('');
+                          $('#txtInvoiceTotalBill').val('');
+                          $('#txtInvoiceCashPaid').val('');
+                          $('#txtInvoiceBalance').val('');
+                      }, 2000);
+                }
+            });
+        }
 
     </script>
 

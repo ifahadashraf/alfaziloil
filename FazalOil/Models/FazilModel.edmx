@@ -21,6 +21,17 @@
           <Property Name="CategoryName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CategoryStatus" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="CustomerDetails">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar(max)" />
+          <Property Name="VehicleNumber" Type="nvarchar(max)" />
+          <Property Name="CurrentReading" Type="bigint" />
+          <Property Name="ExpectedChange" Type="bigint" />
+          <Property Name="DealingEmployee" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Dropoffs">
           <Key>
             <PropertyRef Name="DropoffID" />
@@ -87,6 +98,18 @@
           <Property Name="SupplierName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="SupplierStatus" Type="bit" Nullable="false" />
         </EntityType>
+        <Association Name="FK__SaleInvoi__Custo__71D1E811">
+          <End Role="CustomerDetails" Type="Self.CustomerDetails" Multiplicity="0..1" />
+          <End Role="SaleInvoice" Type="Self.SaleInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerDetails">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="SaleInvoice">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Products_Brands">
           <End Role="Brands" Type="Self.Brands" Multiplicity="1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
@@ -174,12 +197,17 @@
         <EntityContainer Name="FazilModelStoreContainer">
           <EntitySet Name="Brands" EntityType="Self.Brands" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerDetails" EntityType="Self.CustomerDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Dropoffs" EntityType="Self.Dropoffs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SaleInvoice" EntityType="Self.SaleInvoice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SaleItems" EntityType="Self.SaleItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SaleTypes" EntityType="Self.SaleTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__SaleInvoi__Custo__71D1E811" Association="Self.FK__SaleInvoi__Custo__71D1E811">
+            <End Role="CustomerDetails" EntitySet="CustomerDetails" />
+            <End Role="SaleInvoice" EntitySet="SaleInvoice" />
+          </AssociationSet>
           <AssociationSet Name="FK_Products_Brands" Association="Self.FK_Products_Brands">
             <End Role="Brands" EntitySet="Brands" />
             <End Role="Products" EntitySet="Products" />
@@ -262,20 +290,6 @@
           <NavigationProperty Name="Supplier" Relationship="Self.FK_Products_Suppliers" FromRole="Products" ToRole="Suppliers" />
           <NavigationProperty Name="SaleItems" Relationship="FazilModel.FK_SaleItems_Products" FromRole="Product" ToRole="SaleItem" />
         </EntityType>
-        <EntityType Name="SaleInvoice">
-          <Key>
-            <PropertyRef Name="SaleID" />
-          </Key>
-          <Property Name="SaleID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SaleDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CustomerID" Type="Int64" />
-          <Property Name="TotalAmount" Type="Double" Nullable="false" />
-          <Property Name="SaleTypeID" Type="Int64" Nullable="false" />
-          <Property Name="SaleComments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Balance" Type="Double" Nullable="false" />
-          <NavigationProperty Name="SaleType" Relationship="Self.FK_SaleInvoice_SaleTypes" FromRole="SaleInvoice" ToRole="SaleTypes" />
-          <NavigationProperty Name="SaleItems" Relationship="FazilModel.FK_SaleItems_SaleInvoice" FromRole="SaleInvoice" ToRole="SaleItem" />
-        </EntityType>
         <EntityType Name="SaleType">
           <Key>
             <PropertyRef Name="SaleTypeID" />
@@ -283,7 +297,7 @@
           <Property Name="SaleTypeID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SaleTypeName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="SaleInvoices" Relationship="Self.FK_SaleInvoice_SaleTypes" FromRole="SaleTypes" ToRole="SaleInvoice" />
+          <NavigationProperty Name="SaleInvoices" Relationship="FazilModel.FK_SaleInvoice_SaleTypes" FromRole="SaleType" ToRole="SaleInvoice" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -342,24 +356,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SaleInvoice_SaleTypes">
-          <End Role="SaleTypes" Type="Self.SaleType" Multiplicity="1" />
-          <End Role="SaleInvoice" Type="Self.SaleInvoice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SaleTypes">
-              <PropertyRef Name="SaleTypeID" />
-            </Principal>
-            <Dependent Role="SaleInvoice">
-              <PropertyRef Name="SaleTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="FazilOilEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Brands" EntityType="Self.Brand" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Dropoffs" EntityType="Self.Dropoff" />
           <EntitySet Name="Products" EntityType="Self.Product" />
-          <EntitySet Name="SaleInvoices" EntityType="Self.SaleInvoice" />
           <EntitySet Name="SaleTypes" EntityType="Self.SaleType" />
           <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
           <AssociationSet Name="FK_Products_Brands" Association="Self.FK_Products_Brands">
@@ -378,14 +379,20 @@
             <End Role="Suppliers" EntitySet="Suppliers" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK_SaleInvoice_SaleTypes" Association="Self.FK_SaleInvoice_SaleTypes">
-            <End Role="SaleTypes" EntitySet="SaleTypes" />
-            <End Role="SaleInvoice" EntitySet="SaleInvoices" />
-          </AssociationSet>
           <EntitySet Name="SaleItems" EntityType="FazilModel.SaleItem" />
           <AssociationSet Name="FK_SaleItems_Products" Association="FazilModel.FK_SaleItems_Products">
             <End Role="Product" EntitySet="Products" />
             <End Role="SaleItem" EntitySet="SaleItems" />
+          </AssociationSet>
+          <EntitySet Name="CustomerDetails" EntityType="FazilModel.CustomerDetail" />
+          <EntitySet Name="SaleInvoices" EntityType="FazilModel.SaleInvoice" />
+          <AssociationSet Name="FK__SaleInvoi__Custo__71D1E811" Association="FazilModel.FK__SaleInvoi__Custo__71D1E811">
+            <End Role="CustomerDetail" EntitySet="CustomerDetails" />
+            <End Role="SaleInvoice" EntitySet="SaleInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SaleInvoice_SaleTypes" Association="FazilModel.FK_SaleInvoice_SaleTypes">
+            <End Role="SaleType" EntitySet="SaleTypes" />
+            <End Role="SaleInvoice" EntitySet="SaleInvoices" />
           </AssociationSet>
           <AssociationSet Name="FK_SaleItems_SaleInvoice" Association="FazilModel.FK_SaleItems_SaleInvoice">
             <End Role="SaleInvoice" EntitySet="SaleInvoices" />
@@ -416,6 +423,57 @@
             </Principal>
             <Dependent Role="SaleItem">
               <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CustomerDetail">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="VehicleNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CurrentReading" Type="Int64" />
+          <Property Name="ExpectedChange" Type="Int64" />
+          <Property Name="DealingEmployee" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SaleInvoices" Relationship="FazilModel.FK__SaleInvoi__Custo__71D1E811" FromRole="CustomerDetail" ToRole="SaleInvoice" />
+        </EntityType>
+        <EntityType Name="SaleInvoice">
+          <Key>
+            <PropertyRef Name="SaleID" />
+          </Key>
+          <Property Name="SaleID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SaleDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CustomerID" Type="Int64" />
+          <Property Name="TotalAmount" Type="Double" Nullable="false" />
+          <Property Name="SaleTypeID" Type="Int64" Nullable="false" />
+          <Property Name="SaleComments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Balance" Type="Double" Nullable="false" />
+          <NavigationProperty Name="CustomerDetail" Relationship="FazilModel.FK__SaleInvoi__Custo__71D1E811" FromRole="SaleInvoice" ToRole="CustomerDetail" />
+          <NavigationProperty Name="SaleType" Relationship="FazilModel.FK_SaleInvoice_SaleTypes" FromRole="SaleInvoice" ToRole="SaleType" />
+          <NavigationProperty Name="SaleItems" Relationship="FazilModel.FK_SaleItems_SaleInvoice" FromRole="SaleInvoice" ToRole="SaleItem" />
+        </EntityType>
+        <Association Name="FK__SaleInvoi__Custo__71D1E811">
+          <End Type="FazilModel.CustomerDetail" Role="CustomerDetail" Multiplicity="0..1" />
+          <End Type="FazilModel.SaleInvoice" Role="SaleInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerDetail">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="SaleInvoice">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SaleInvoice_SaleTypes">
+          <End Type="FazilModel.SaleType" Role="SaleType" Multiplicity="1" />
+          <End Type="FazilModel.SaleInvoice" Role="SaleInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaleType">
+              <PropertyRef Name="SaleTypeID" />
+            </Principal>
+            <Dependent Role="SaleInvoice">
+              <PropertyRef Name="SaleTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -482,19 +540,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SaleInvoices">
-            <EntityTypeMapping TypeName="FazilModel.SaleInvoice">
-              <MappingFragment StoreEntitySet="SaleInvoice">
-                <ScalarProperty Name="SaleID" ColumnName="SaleID" />
-                <ScalarProperty Name="SaleDateTime" ColumnName="SaleDateTime" />
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
-                <ScalarProperty Name="SaleTypeID" ColumnName="SaleTypeID" />
-                <ScalarProperty Name="SaleComments" ColumnName="SaleComments" />
-                <ScalarProperty Name="Balance" ColumnName="Balance" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SaleTypes">
             <EntityTypeMapping TypeName="FazilModel.SaleType">
               <MappingFragment StoreEntitySet="SaleTypes">
@@ -522,6 +567,31 @@
                 <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="SaleID" ColumnName="SaleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerDetails">
+            <EntityTypeMapping TypeName="FazilModel.CustomerDetail">
+              <MappingFragment StoreEntitySet="CustomerDetails">
+                <ScalarProperty Name="DealingEmployee" ColumnName="DealingEmployee" />
+                <ScalarProperty Name="ExpectedChange" ColumnName="ExpectedChange" />
+                <ScalarProperty Name="CurrentReading" ColumnName="CurrentReading" />
+                <ScalarProperty Name="VehicleNumber" ColumnName="VehicleNumber" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaleInvoices">
+            <EntityTypeMapping TypeName="FazilModel.SaleInvoice">
+              <MappingFragment StoreEntitySet="SaleInvoice">
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="SaleComments" ColumnName="SaleComments" />
+                <ScalarProperty Name="SaleTypeID" ColumnName="SaleTypeID" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="SaleDateTime" ColumnName="SaleDateTime" />
                 <ScalarProperty Name="SaleID" ColumnName="SaleID" />
               </MappingFragment>
             </EntityTypeMapping>

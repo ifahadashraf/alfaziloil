@@ -29,9 +29,10 @@ namespace FazalOil.Models
         public DbSet<Category> Categories { get; set; }
         public DbSet<Dropoff> Dropoffs { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<SaleInvoice> SaleInvoices { get; set; }
         public DbSet<SaleType> SaleTypes { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<SaleItem> SaleItems { get; set; }
+        public DbSet<CustomerDetail> CustomerDetails { get; set; }
+        public DbSet<SaleInvoice> SaleInvoices { get; set; }
     }
 }

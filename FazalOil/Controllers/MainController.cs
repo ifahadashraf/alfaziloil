@@ -38,5 +38,9 @@ namespace FazalOil.Controllers
         {
             return View();
         }
+        public ActionResult DailyExpenses()
+        {
+            return View();
+        }
     }
 }

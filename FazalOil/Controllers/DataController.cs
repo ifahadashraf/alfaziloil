@@ -145,6 +145,33 @@ namespace FazalOil.Controllers
             return JsonConvert.SerializeObject(list);
         }
 
+        [HttpGet]
+        public string SearchInvoice(long query)
+        {
+            var list = e.SaleInvoices.Select(x => new
+            {
+                x.SaleID,
+                x.TotalAmount,
+                x.Balance,
+                CustomerDetail = new
+                {
+                    x.CustomerDetail.CustomerName
+                }
+            }).Where(y => y.SaleID == query);
+            return JsonConvert.SerializeObject(list);
+        }
+
+        [HttpGet]
+        public string UpdateInvoice(long saleID, long balance)
+        {
+            var obj = e.SaleInvoices.Where(x => x.SaleID == saleID).ToList<SaleInvoice>()[0];
+            obj.Balance = balance;
+
+            e.SaveChanges();
+
+            return "1";
+        }
+
         [HttpPost]
         public string AddInvoice()
         {
@@ -153,10 +180,16 @@ namespace FazalOil.Controllers
 
             InvoiceModel obj = JsonConvert.DeserializeObject<InvoiceModel>(requestFromPost);
 
+            e.CustomerDetails.Add(obj.customer);
+            e.SaveChanges();
+
+            var c_list = e.CustomerDetails.ToList<CustomerDetail>();
+
             SaleInvoice invoice = new SaleInvoice();
             invoice.SaleDateTime = DateTime.Now;
             invoice.TotalAmount = obj.netTotal;
             invoice.SaleComments = obj.comments;
+            invoice.CustomerID = c_list[c_list.Count - 1].CustomerID;
             invoice.Balance = obj.balance;
             if (obj.typeOfInvoice.ToLower() == "cash")
             {
@@ -164,7 +197,7 @@ namespace FazalOil.Controllers
             }
             else
             {
-                invoice.SaleTypeID = 1;
+                invoice.SaleTypeID = 2;
             }
 
             e.SaleInvoices.Add(invoice);
@@ -209,6 +242,8 @@ namespace FazalOil.Controllers
 
             return ""+invoiceID;
         }
+
+        
 
         private void SendToPrinter()
         {

@@ -27,6 +27,7 @@ namespace FazalOil.Models
         public string SaleComments { get; set; }
         public double Balance { get; set; }
     
+        public virtual CustomerDetail CustomerDetail { get; set; }
         public virtual SaleType SaleType { get; set; }
         public virtual ICollection<SaleItem> SaleItems { get; set; }
     }

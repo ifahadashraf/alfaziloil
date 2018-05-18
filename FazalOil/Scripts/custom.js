@@ -10,6 +10,8 @@ var GET_SUPPLIER = "Data/GetSuppliers";
 var GET_DROPOFF = "Data/GetDropoffs";
 var ADD_INVOICE = "Data/AddInvoice";
 var GET_AVAIL_STOCK = "Data/GetAvailableStock";
+var SEARCH_INVOICE = "Data/SearchInvoice";
+var UPDATE_INVOICE = "Data/UpdateInvoice";
 
 //***********************END GLOBAL VARIABLES***********************//
 
@@ -264,6 +266,32 @@ function addInvoice(model,callback) {
         type: "POST",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(model),
+        success: function (data) {
+            callback(data);
+        },
+        error: function (err) {
+            callback("-1");
+        }
+    });
+}
+
+function getInvoices(num, callback) {
+    $.ajax({
+        url: BASE_URL + SEARCH_INVOICE + '?query='+num,
+        type: "GET",
+        success: function (data) {
+            callback(data);
+        },
+        error: function (err) {
+            callback("-1");
+        }
+    });
+}
+
+function updateInvoiceApi(saleid, bal, callback) {
+    $.ajax({
+        url: BASE_URL + UPDATE_INVOICE + '?saleID=' + saleid + "&balance=" + bal,
+        type: "GET",
         success: function (data) {
             callback(data);
         },
