@@ -39,7 +39,7 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <style>
+    <!-- <style>
         * {
             box-sizing: border-box;
         }
@@ -115,7 +115,7 @@
         .gone{
             display:none;
         }
-    </style>
+    </style> -->
 
 
 </head>
@@ -376,6 +376,9 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
+                            <a href="/Main/Zakaat"><i class="fa fa-th-list fa-fw"></i> Zakaat</a>
+                        </li>
+                        <li>
                             <a href="/Main/DailyExpenses"><i class="fa fa-th-list fa-fw"></i> Daily Expenses</a>
                         </li>
                         <li>
@@ -384,7 +387,7 @@
                         <li>
                             <a href="/Main/Invoice"><i class="fa fa-table fa-fw"></i> Invoice</a>
                         </li>
-                
+
                     </ul>
                 </div>
               </div>
@@ -392,7 +395,7 @@
         </nav>
 
         <div id="page-wrapper">
-            <div class="loader gone"></div>
+            <div class="loader"></div>
             <div class="row">
                 <div class="page-header">
                     <h1>Daily Expenses</h1>
@@ -411,11 +414,11 @@
                     </div>
                 </div>
 
-                <div class="col-lg-7"></div>
-                <div class="col-lg-2">
-                    <label>Actions</label>
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span>&nbsp Add Expense</button>
-                </div>
+                    <div class="col-lg-8"></div>
+                    <div class="col-lg-2">
+                      <label>Action</label>
+                      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span>&nbsp Add Expense</button>
+                    </div>
 
             </div>
             <!-- /.row -->
@@ -439,11 +442,25 @@
                                 </thead>
                                 <tbody>
                                     <tr class="odd gradeX">
-                                        <td>Zic A+</td>
-                                        <td>112</td>
-                                        <td>250</td>
-                                        <td class="center">12-4-2018</td>
+                                        <td>1</td>
+                                        <td>Ahmed</td>
+                                        <td>Rent</td>
                                         <td class="center">1200</td>
+                                        <td class="center">12-4-2018</td>
+                                    </tr>
+                                    <tr class="odd gradeX">
+                                        <td>2</td>
+                                        <td>Bilal</td>
+                                        <td>Rent</td>
+                                        <td class="center">1200</td>
+                                        <td class="center">12-4-2018</td>
+                                    </tr>
+                                    <tr class="odd gradeX">
+                                        <td>3</td>
+                                        <td>Anonymous</td>
+                                        <td>Rent</td>
+                                        <td class="center">1200</td>
+                                        <td class="center">12-4-2018</td>
                                     </tr>
                             </table>
 
@@ -495,7 +512,7 @@
                                         <div class="col-lg-6">
                                             <div  class="form-group">
                                                 <label>Purpose:</label>
-                                                <input id="txtPurpose" class="form-control" placeholder="Zakaat or other" >
+                                                <input id="txtPurpose" class="form-control" placeholder="Purpose" >
                                             </div>
                                         </div>
                                     </div>
@@ -533,7 +550,7 @@
     <script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
     <script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
     <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
-            
+
     <!-- Morris Charts JavaScript -->
     <script src="~/vendor/raphael/raphael.min.js"></script>
     <script src="~/vendor/morrisjs/morris.min.js"></script>
@@ -755,12 +772,12 @@
 
             categories();
             totalPrice();
-            
+
         }
 
     </script>*@
 
-        
+
 </body>
 
 </html>

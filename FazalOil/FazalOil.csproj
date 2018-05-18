@@ -432,7 +432,6 @@
     <Content Include="vendor\raphael\raphael.js" />
     <Content Include="vendor\raphael\raphael.min.js" />
     <Content Include="Views\Main\AddProduct.cshtml" />
-    <Content Include="Views\Main\DailyExpenses.cshtml" />
     <None Include="Views\Main\Welcome.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -458,6 +457,8 @@
     <Content Include="Content\modal\bootstrap.min.js" />
     <Content Include="Content\modal\jquery.min.js" />
     <Content Include="Views\Main\LogIn.cshtml" />
+    <Content Include="Views\Main\DailyExpenses.cshtml" />
+    <Content Include="Views\Main\Zakaat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

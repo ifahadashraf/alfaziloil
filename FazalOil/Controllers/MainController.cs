@@ -42,5 +42,9 @@ namespace FazalOil.Controllers
         {
             return View();
         }
+		public ActionResult Zakaat()
+        {
+            return View();
+        }
     }
 }
