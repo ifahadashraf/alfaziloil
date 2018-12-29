@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace FazalOil
+namespace FazilOil
 {
     public class FilterConfig
     {

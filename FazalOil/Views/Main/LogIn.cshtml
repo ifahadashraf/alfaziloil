@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Al Fazal Oil Agency</title>
+    <title>Al Fazil Oil Agency</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -39,22 +39,20 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Al Fazal Oil Agency</h3>
+                        <h3 class="panel-title">Al Fazil Oil Agency</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form">
-                            <fieldset>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Username" name="email" id="txtUserName" autofocus>
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" id="txtPassword" value="">
-                                </div>
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Username" name="email" id="txtUserName" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Password" name="password" type="password" id="txtPassword" value="">
+                            </div>
                               
-                                <!-- Change this to a button or input when using this as a form -->
-                                <a href="~/Main/Invoice" class="btn btn-lg btn-success btn-block">Login</a>
-                            </fieldset>
-                        </form>
+                            <!-- Change this to a button or input when using this as a form -->
+                            <button class="btn btn-lg btn-success btn-block" onclick="verifyCredentials()">Login</button>
+                        </fieldset>
                     </div>
                 </div>
             </div>
@@ -72,6 +70,25 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
+
+    <script src="~/Scripts/custom.js"></script>
+
+    <script>
+        function verifyCredentials()
+        {
+            verifyCredentialsApi(function (data){
+                if(data == "1")
+                {
+                    window.location = "../../Main/Invoice";
+                }
+                else
+                {
+                    alert("Wrong id or password");
+                }
+            });
+
+        }
+    </script>
 
 </body>
 

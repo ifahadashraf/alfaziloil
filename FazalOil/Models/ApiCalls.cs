@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace FazalOil.Models
+namespace FazilOil.Models
 {
     public class ApiCalls
     {

@@ -1,14 +1,18 @@
-﻿using Newtonsoft.Json;
+﻿using FazalOil.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace FazalOil.Models
+namespace FazilOil.Models
 {
     [Serializable]
     public class InvoiceModel
     {
+        [JsonProperty("saleid")]
+        public long SaleID { get; set; }
+
         [JsonProperty("date")]
         public DateTime date { get; set; }
 

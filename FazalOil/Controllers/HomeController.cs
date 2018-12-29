@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace FazalOil.Controllers
+namespace FazilOil.Controllers
 {
     public class HomeController : Controller
     {

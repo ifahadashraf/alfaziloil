@@ -9,9 +9,18 @@ var GET_CATEGORIES = "Data/GetCategories";
 var GET_SUPPLIER = "Data/GetSuppliers";
 var GET_DROPOFF = "Data/GetDropoffs";
 var ADD_INVOICE = "Data/AddInvoice";
+var UPDATE_INVOICE = "Data/UpdateInvoice";
 var GET_AVAIL_STOCK = "Data/GetAvailableStock";
 var SEARCH_INVOICE = "Data/SearchInvoice";
 var UPDATE_INVOICE = "Data/UpdateInvoice";
+var GET_CUSTOMERS = "Data/GetCustomers";
+var ADD_EXPENSE = "Data/AddExpense";
+var GET_EXPENSES = "Data/GetExpenses";
+var GET_ZAKAAT = "Data/GetZakaat";
+var GET_SALES = "Data/GetSales";
+var GET_SALES_BY_DATE = "Data/GetSalesByDate";
+var GET_DAILY_EXPENSES = "Data/GetDailyExpenses";
+var VERIFY_CREDENTIALS = "Main/Verify";
 
 //***********************END GLOBAL VARIABLES***********************//
 
@@ -113,6 +122,7 @@ function saveProduct() {
                       function () {
                           //do something special
                           $("#alertdiv").html('');
+                          clearProduct();
                       }, 2000);
 
 
@@ -275,9 +285,24 @@ function addInvoice(model,callback) {
     });
 }
 
-function getInvoices(num, callback) {
+function alterInvoiceApi(model, callback) {
     $.ajax({
-        url: BASE_URL + SEARCH_INVOICE + '?query='+num,
+        url: BASE_URL + UPDATE_INVOICE,
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(model),
+        success: function (data) {
+            callback(data);
+        },
+        error: function (err) {
+            callback("-1");
+        }
+    });
+}
+
+function getInvoices(num,vnum, callback) {
+    $.ajax({
+        url: BASE_URL + SEARCH_INVOICE + '?query='+num+"&msg="+vnum,
         type: "GET",
         success: function (data) {
             callback(data);
@@ -291,6 +316,103 @@ function getInvoices(num, callback) {
 function updateInvoiceApi(saleid, bal, callback) {
     $.ajax({
         url: BASE_URL + UPDATE_INVOICE + '?saleID=' + saleid + "&balance=" + bal,
+        type: "GET",
+        success: function (data) {
+            callback(data);
+        },
+        error: function (err) {
+            callback("-1");
+        }
+    });
+}
+
+function getCustomersApi(callback) {
+    $.ajax({
+        url: BASE_URL + GET_CUSTOMERS,
+        type: "GET",
+        success: function (data) {
+            callback(data);
+        },
+        error: function (err) {
+            callback("-1");
+        }
+    });
+}
+
+function addExpense(model,callback) {
+    $.ajax({
+        url: BASE_URL + ADD_EXPENSE,
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(model),
+        success: function (data) {
+            callback(data);
+        },
+        error: function (err) {
+            callback("-1");
+        }
+    });
+}
+
+function getExpenses(date,callback) {
+    $.ajax({
+        url: BASE_URL + GET_EXPENSES + "?date=" + date,
+        type: "GET",
+        success: function (data) {
+            callback(data);
+        },
+        error: function (err) {
+            callback("-1");
+        }
+    });
+}
+
+function getDailyExpenses(date, to, callback) {
+    $.ajax({
+        url: BASE_URL + GET_DAILY_EXPENSES + "?dateFrom=" + date + "&dateTo=" +to,
+        type: "GET",
+        success: function (data) {
+            callback(data);
+        },
+        error: function (err) {
+            callback("-1");
+        }
+    });
+}
+
+function getZakaat(callback) {
+    $.ajax({
+        url: BASE_URL + GET_ZAKAAT,
+        type: "GET",
+        success: function (data) {
+            callback(data);
+        },
+        error: function (err) {
+            callback("-1");
+        }
+    });
+}
+
+function getSalesApi(date,dt, callback) {
+    $.ajax({
+        url: BASE_URL + GET_SALES_BY_DATE + "?dateFrom=" + date + "&dateTo=" + dt,
+        type: "GET",
+        success: function (data) {
+            callback(data);
+        },
+        error: function (err) {
+            callback("-1");
+        }
+    });
+}
+
+function verifyCredentialsApi(callback)
+{
+    var id = $('#txtUserName').val();
+    var pass = $('#txtPassword').val();
+
+    $.ajax({
+        url: BASE_URL + VERIFY_CREDENTIALS + "?id=" + id + "&pass=" + pass,
         type: "GET",
         success: function (data) {
             callback(data);

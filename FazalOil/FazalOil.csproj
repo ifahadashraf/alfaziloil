@@ -47,6 +47,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -55,6 +59,14 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.0.0\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.0.0\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -139,6 +151,9 @@
     <Compile Include="Models\Dropoff.cs">
       <DependentUpon>FazilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Expens.cs">
+      <DependentUpon>FazilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\FazilModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -154,6 +169,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FazilModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\GET_SALES_REPORT_BY_DATE_Result.cs">
+      <DependentUpon>FazilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GET_SALES_REPORT_Result.cs">
+      <DependentUpon>FazilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\InvoiceModel.cs" />
     <Compile Include="Models\Product.cs">
       <DependentUpon>FazilModel.tt</DependentUpon>
@@ -165,10 +186,14 @@
     <Compile Include="Models\SaleItem.cs">
       <DependentUpon>FazilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SaleItemModel.cs" />
     <Compile Include="Models\SaleType.cs">
       <DependentUpon>FazilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Supplier.cs">
+      <DependentUpon>FazilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Transaction.cs">
       <DependentUpon>FazilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -273,9 +298,11 @@
     <None Include="Properties\PublishProfiles\alfaziloilagency - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\faziloil - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\faziloil - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\calls.js" />
     <Content Include="Scripts\custom.js" />
+    <Content Include="Scripts\expenses.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\js\bootstrap.js" />
@@ -432,7 +459,7 @@
     <Content Include="vendor\raphael\raphael.js" />
     <Content Include="vendor\raphael\raphael.min.js" />
     <Content Include="Views\Main\AddProduct.cshtml" />
-    <None Include="Views\Main\Welcome.cshtml" />
+    <None Include="Views\Main\Main.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -459,6 +486,7 @@
     <Content Include="Views\Main\LogIn.cshtml" />
     <Content Include="Views\Main\DailyExpenses.cshtml" />
     <Content Include="Views\Main\Zakaat.cshtml" />
+    <Content Include="Views\Main\Sales.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

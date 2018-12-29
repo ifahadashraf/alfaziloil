@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace FazalOil
+namespace FazilOil
 {
     public class RouteConfig
     {
@@ -16,7 +16,7 @@ namespace FazalOil
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Main", action = "Welcome", id = UrlParameter.Optional }
+                defaults: new { controller = "Main", action = "LogIn", id = UrlParameter.Optional }
             );
         }
     }

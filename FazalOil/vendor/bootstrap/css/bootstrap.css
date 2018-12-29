@@ -1291,7 +1291,7 @@ p {
 }
 .lead {
   margin-bottom: 20px;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 300;
   line-height: 1.4;
 }
@@ -5470,7 +5470,7 @@ button.list-group-item-danger.active:focus {
 .panel-title {
   margin-top: 0;
   margin-bottom: 0;
-  font-size: 16px;
+  font-size: 12px;
   color: inherit;
 }
 .panel-title > a,

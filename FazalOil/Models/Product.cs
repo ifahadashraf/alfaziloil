@@ -16,6 +16,7 @@ namespace FazalOil.Models
     {
         public Product()
         {
+            this.Transactions = new HashSet<Transaction>();
             this.SaleItems = new HashSet<SaleItem>();
         }
     
@@ -35,6 +36,7 @@ namespace FazalOil.Models
         public virtual Brand Brand { get; set; }
         public virtual Category Category { get; set; }
         public virtual Dropoff Dropoff { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual ICollection<SaleItem> SaleItems { get; set; }
     }

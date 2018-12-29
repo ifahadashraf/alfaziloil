@@ -12,6 +12,9 @@ namespace FazalOil.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Objects;
+    using System.Data.Objects.DataClasses;
+    using System.Linq;
     
     public partial class FazilOilEntities : DbContext
     {
@@ -27,12 +30,36 @@ namespace FazalOil.Models
     
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<CustomerDetail> CustomerDetails { get; set; }
         public DbSet<Dropoff> Dropoffs { get; set; }
+        public DbSet<Expens> Expenses { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<SaleInvoice> SaleInvoices { get; set; }
+        public DbSet<SaleItem> SaleItems { get; set; }
         public DbSet<SaleType> SaleTypes { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
-        public DbSet<SaleItem> SaleItems { get; set; }
-        public DbSet<CustomerDetail> CustomerDetails { get; set; }
-        public DbSet<SaleInvoice> SaleInvoices { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
+    
+        public virtual ObjectResult<GET_SALES_REPORT_Result> GET_SALES_REPORT(Nullable<long> saleid)
+        {
+            var saleidParameter = saleid.HasValue ?
+                new ObjectParameter("saleid", saleid) :
+                new ObjectParameter("saleid", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_SALES_REPORT_Result>("GET_SALES_REPORT", saleidParameter);
+        }
+    
+        public virtual ObjectResult<GET_SALES_REPORT_BY_DATE_Result> GET_SALES_REPORT_BY_DATE(string saledateFrom, string saledateTo)
+        {
+            var saledateFromParameter = saledateFrom != null ?
+                new ObjectParameter("saledateFrom", saledateFrom) :
+                new ObjectParameter("saledateFrom", typeof(string));
+    
+            var saledateToParameter = saledateTo != null ?
+                new ObjectParameter("saledateTo", saledateTo) :
+                new ObjectParameter("saledateTo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_SALES_REPORT_BY_DATE_Result>("GET_SALES_REPORT_BY_DATE", saledateFromParameter, saledateToParameter);
+        }
     }
 }
