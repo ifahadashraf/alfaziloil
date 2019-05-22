@@ -25,6 +25,7 @@ namespace FazalOil.Models
         public Nullable<long> CurrentReading { get; set; }
         public Nullable<long> ExpectedChange { get; set; }
         public string DealingEmployee { get; set; }
+        public Nullable<long> CustomerNumber { get; set; }
     
         public virtual ICollection<SaleInvoice> SaleInvoices { get; set; }
     }

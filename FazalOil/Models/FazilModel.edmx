@@ -31,6 +31,7 @@
           <Property Name="CurrentReading" Type="bigint" />
           <Property Name="ExpectedChange" Type="bigint" />
           <Property Name="DealingEmployee" Type="nvarchar(max)" />
+          <Property Name="CustomerNumber" Type="bigint" />
         </EntityType>
         <EntityType Name="Dropoffs">
           <Key>
@@ -122,121 +123,6 @@
           <Property Name="TotalLitres" Type="float" />
           <Property Name="PurchasingPrice" Type="float" Nullable="false" />
         </EntityType>
-        <Association Name="FK__SaleInvoi__Custo__71D1E811">
-          <End Role="CustomerDetails" Type="Self.CustomerDetails" Multiplicity="0..1" />
-          <End Role="SaleInvoice" Type="Self.SaleInvoice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CustomerDetails">
-              <PropertyRef Name="CustomerID" />
-            </Principal>
-            <Dependent Role="SaleInvoice">
-              <PropertyRef Name="CustomerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Transacti__Produ__75A278F5">
-          <End Role="Products" Type="Self.Products" Multiplicity="1" />
-          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="ProductID" />
-            </Principal>
-            <Dependent Role="Transactions">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Products_Brands">
-          <End Role="Brands" Type="Self.Brands" Multiplicity="1" />
-          <End Role="Products" Type="Self.Products" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Brands">
-              <PropertyRef Name="BrandID" />
-            </Principal>
-            <Dependent Role="Products">
-              <PropertyRef Name="BrandID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Products_Categories">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
-          <End Role="Products" Type="Self.Products" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categories">
-              <PropertyRef Name="CategoryID" />
-            </Principal>
-            <Dependent Role="Products">
-              <PropertyRef Name="CategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Products_Dropoffs">
-          <End Role="Dropoffs" Type="Self.Dropoffs" Multiplicity="1" />
-          <End Role="Products" Type="Self.Products" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Dropoffs">
-              <PropertyRef Name="DropoffID" />
-            </Principal>
-            <Dependent Role="Products">
-              <PropertyRef Name="DropoffID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Products_Suppliers">
-          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
-          <End Role="Products" Type="Self.Products" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Suppliers">
-              <PropertyRef Name="SupplierID" />
-            </Principal>
-            <Dependent Role="Products">
-              <PropertyRef Name="SupplierID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SaleInvoice_SaleTypes">
-          <End Role="SaleTypes" Type="Self.SaleTypes" Multiplicity="1" />
-          <End Role="SaleInvoice" Type="Self.SaleInvoice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SaleTypes">
-              <PropertyRef Name="SaleTypeID" />
-            </Principal>
-            <Dependent Role="SaleInvoice">
-              <PropertyRef Name="SaleTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SaleItems_Products">
-          <End Role="Products" Type="Self.Products" Multiplicity="1" />
-          <End Role="SaleItems" Type="Self.SaleItems" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="ProductID" />
-            </Principal>
-            <Dependent Role="SaleItems">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SaleItems_SaleInvoice">
-          <End Role="SaleInvoice" Type="Self.SaleInvoice" Multiplicity="1" />
-          <End Role="SaleItems" Type="Self.SaleItems" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SaleInvoice">
-              <PropertyRef Name="SaleID" />
-            </Principal>
-            <Dependent Role="SaleItems">
-              <PropertyRef Name="SaleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Function Name="GET_SALES_REPORT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="saleid" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="GET_SALES_REPORT_BY_DATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="saledateFrom" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="saledateTo" Type="nvarchar(max)" Mode="In" />
-        </Function>
         <EntityContainer Name="FazilModelStoreContainer">
           <EntitySet Name="Brands" EntityType="Self.Brands" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
@@ -249,42 +135,6 @@
           <EntitySet Name="SaleTypes" EntityType="Self.SaleTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__SaleInvoi__Custo__71D1E811" Association="Self.FK__SaleInvoi__Custo__71D1E811">
-            <End Role="CustomerDetails" EntitySet="CustomerDetails" />
-            <End Role="SaleInvoice" EntitySet="SaleInvoice" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Transacti__Produ__75A278F5" Association="Self.FK__Transacti__Produ__75A278F5">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="Transactions" EntitySet="Transactions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Products_Brands" Association="Self.FK_Products_Brands">
-            <End Role="Brands" EntitySet="Brands" />
-            <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Products_Dropoffs" Association="Self.FK_Products_Dropoffs">
-            <End Role="Dropoffs" EntitySet="Dropoffs" />
-            <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Products_Suppliers" Association="Self.FK_Products_Suppliers">
-            <End Role="Suppliers" EntitySet="Suppliers" />
-            <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SaleInvoice_SaleTypes" Association="Self.FK_SaleInvoice_SaleTypes">
-            <End Role="SaleTypes" EntitySet="SaleTypes" />
-            <End Role="SaleInvoice" EntitySet="SaleInvoice" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SaleItems_Products" Association="Self.FK_SaleItems_Products">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="SaleItems" EntitySet="SaleItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SaleItems_SaleInvoice" Association="Self.FK_SaleItems_SaleInvoice">
-            <End Role="SaleInvoice" EntitySet="SaleInvoice" />
-            <End Role="SaleItems" EntitySet="SaleItems" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -319,6 +169,7 @@
           <Property Name="ExpectedChange" Type="Int64" />
           <Property Name="DealingEmployee" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="SaleInvoices" Relationship="Self.FK__SaleInvoi__Custo__276EDEB3" FromRole="CustomerDetails" ToRole="SaleInvoice" />
+          <Property Name="CustomerNumber" Type="Int64" />
         </EntityType>
         <EntityType Name="Dropoff">
           <Key>
@@ -636,6 +487,7 @@
           <EntitySetMapping Name="CustomerDetails">
             <EntityTypeMapping TypeName="FazilModel.CustomerDetail">
               <MappingFragment StoreEntitySet="CustomerDetails">
+                <ScalarProperty Name="CustomerNumber" ColumnName="CustomerNumber" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="VehicleNumber" ColumnName="VehicleNumber" />
@@ -742,35 +594,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GET_SALES_REPORT" FunctionName="FazilModel.Store.GET_SALES_REPORT">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="FazilModel.GET_SALES_REPORT_Result">
-                <ScalarProperty Name="SaleID" ColumnName="SaleID" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="SellingLiters" ColumnName="SellingLiters" />
-                <ScalarProperty Name="CansSold" ColumnName="CansSold" />
-                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GET_SALES_REPORT_BY_DATE" FunctionName="FazilModel.Store.GET_SALES_REPORT_BY_DATE">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="FazilModel.GET_SALES_REPORT_BY_DATE_Result">
-                <ScalarProperty Name="SaleID" ColumnName="SaleID" />
-                <ScalarProperty Name="SaleDateTime" ColumnName="SaleDateTime" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="SellingLiters" ColumnName="SellingLiters" />
-                <ScalarProperty Name="CansSold" ColumnName="CansSold" />
-                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Profit" ColumnName="Profit" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

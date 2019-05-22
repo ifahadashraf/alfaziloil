@@ -97,7 +97,7 @@ namespace FazilOil.Controllers
         }
         public ActionResult LogIn()
         {
-            Session["LoginInStatus"] = false;
+            Session.Clear();
             return View();
         }
         public ActionResult DailyExpenses()

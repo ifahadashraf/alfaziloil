@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -45,8 +47,19 @@ namespace FazilOil.Controllers
             else //Update Product
             {
                 var toUpdate = e.Products.Where(x => x.ProductID == obj.ProductID).ToList<Product>()[0];
+                double? newPrice = 0.0;
+                if(obj.TotalCans > 0)
+                    newPrice = ((toUpdate.TotalCans * toUpdate.PurchasingPrice) +
+                    (obj.TotalCans * obj.PurchasingPrice)) / (toUpdate.TotalCans + obj.TotalCans);
+                else if(obj.TotalLiters > 0)
+                    newPrice = ((toUpdate.TotalLiters * toUpdate.PurchasingPrice) +
+                    (obj.TotalLiters * obj.PurchasingPrice)) / (toUpdate.TotalLiters + obj.TotalLiters);
+                else
+                    newPrice = ((toUpdate.TotalQuantity * toUpdate.PurchasingPrice) +
+                    (obj.TotalQuantity * obj.PurchasingPrice)) / (toUpdate.TotalQuantity + obj.TotalQuantity);
 
-                toUpdate.PurchasingPrice = (toUpdate.PurchasingPrice + obj.PurchasingPrice) / 2;
+                
+                toUpdate.PurchasingPrice = (double)newPrice;
                 toUpdate.ProductName = obj.ProductName;
                 toUpdate.DateOfPurchase = obj.DateOfPurchase;
                 toUpdate.DropoffID = obj.DropoffID;
@@ -299,7 +312,7 @@ namespace FazilOil.Controllers
 
                 SaleInvoice invoice = new SaleInvoice();
                 TimeZoneInfo timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time");
-
+                
                 DateTime newDateTime = TimeZoneInfo.ConvertTime(DateTime.Now, timeZoneInfo);
                 invoice.SaleDateTime = newDateTime;
                 invoice.TotalAmount = obj.netTotal;
@@ -307,12 +320,16 @@ namespace FazilOil.Controllers
 
                 if (obj.customer.VehicleNumber != "") //new Item
                 {
-                    var exisiting = e.CustomerDetails.Where(x => x.VehicleNumber == obj.customer.VehicleNumber).ToList<CustomerDetail>();
+                    var exisiting = e.CustomerDetails.Where(x => x.VehicleNumber == obj.customer.VehicleNumber).OrderByDescending(x => x.CustomerID).ToList<CustomerDetail>();
                     if (exisiting.Count > 0)
                     {
                         exisiting[0].CurrentReading = obj.customer.CurrentReading;
                         exisiting[0].ExpectedChange = obj.customer.ExpectedChange;
                         invoice.CustomerID = exisiting[0].CustomerID;
+                        var message = "Dear customer thanks for your visit at Al-Fazil Oil. We appreciate your trust in our services and look forward to welcoming you again. Vehicle No : " + obj.customer.VehicleNumber;
+                        var url = "http://my.ezeee.pk/sendsms_url.html?Username=03554448044&Password=$03554448044&From=AL Fazil&To=0" + obj.customer.CustomerNumber + "&Message=" + message;
+                        var responseString = new HttpClient().GetStringAsync(url);
+                        //var responseString = Task.Run(() => new HttpClient().GetStringAsync(url)).Result;
                     }
                     else
                     {
@@ -321,17 +338,14 @@ namespace FazilOil.Controllers
                         var c_list = e.CustomerDetails.ToList<CustomerDetail>();
                         invoice.CustomerID = c_list[c_list.Count - 1].CustomerID;
                     }
+
                 }
 
                 invoice.Balance = obj.balance;
                 if (obj.typeOfInvoice.ToLower() == "cash")
-                {
                     invoice.SaleTypeID = 1;
-                }
                 else
-                {
                     invoice.SaleTypeID = 2;
-                }
 
                 e.SaleInvoices.Add(invoice);
                 e.SaveChanges();
@@ -372,7 +386,6 @@ namespace FazilOil.Controllers
                 }
 
                 e.SaveChanges();
-
                 return "" + invoiceID;
             }
             catch (Exception ex)
